@@ -1,5 +1,5 @@
 ### English introduction
-Please view [README.md](https://github.com/chvin/react-tetris/blob/master/README-EN.md)
+Please view [README.md](https://github.com/DarkArtistry/world-react-tetris/blob/master/README-EN.md)
 
 ----
 ## 用React、Redux、Immutable做俄罗斯方块
