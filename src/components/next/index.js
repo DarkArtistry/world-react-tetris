@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-import style from './index.less';
+import * as style from './index.less';
 import { blockShape } from '../../unit/const';
 
 const xy = { // 方块在下一个中的坐标

@@ -2,7 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 import propTypes from 'prop-types';
 
-import style from './index.less';
+import * as style from './index.less';
 import Button from './button';
 import store from '../../store';
 import todo from '../../control/todo';

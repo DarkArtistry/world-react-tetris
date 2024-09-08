@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import propTypes from 'prop-types';
 
-import style from './index.less';
+import * as style from './index.less';
 
 import Matrix from '../components/matrix';
 import Decorate from '../components/decorate';

@@ -9,6 +9,9 @@ const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
 
 
+const isProductionMode = process.env.NODE_ENV === "production";
+
+
 // 程序入口
 const entry = path.join(__dirname, '/src/index.js');
 
@@ -65,20 +68,35 @@ const loaders = [
     test: /\.less$/i,
     use: [
       // compiles Less to CSS
-      "style-loader",
+      // isProductionMode ? MiniCssExtractPlugin.loader : "style-loader",
+      MiniCssExtractPlugin.loader,
       {
         loader: "css-loader",
         options: {
-          modules: true,
-          importLoaders: 1,
+          modules: {
+            localIdentName: '[hash:base64:5]',  // Custom class name pattern
+          },
+          // importLoaders: 1,
+          // sourceMap: true,
         },
       },
-      // "postcss-loader",
+      {
+        loader: "postcss-loader",
+        // options: {
+        //   postcssOptions: {
+        //     plugins: [
+        //       "autoprefixer",
+        //     ],
+        //   },
+        //   sourceMap: true,
+        // },
+      },
       {
         loader: "less-loader",
-        options: {
-          implementation: require("less"),
-        },
+        // options: {
+        //   implementation: require("less"),
+        //   sourceMap: true,
+        // },
       },
     ],
   },
@@ -97,9 +115,6 @@ const devPlugins = [
   // 允许错误不打断程序, 仅开发模式需要
   new webpack.NoEmitOnErrorsPlugin(),
   // 打开浏览器页面
-  // new OpenBrowserPlugin({
-  //   url: 'http://127.0.0.1:8080/'
-  // }),
   // css打包
   new MiniCssExtractPlugin(),
 ]
@@ -121,13 +136,6 @@ const productionPlugins = [
   new HtmlWebpackPlugin({
     template: __dirname + '/server/index.tmpl.html'
   }),
-  // JS压缩
-  // new webpack.optimize.UglifyJsPlugin({
-  //   compress: {
-  //     warnings: false
-  //   }
-  // }
-  // ),
   // css打包
   new MiniCssExtractPlugin(),
 ];
@@ -136,9 +144,9 @@ const productionPlugins = [
 const devServer = {
   historyApiFallback: false,
   port: 8080, // defaults to "8080"
-  hot: true, // Hot Module Replacement
   host: '0.0.0.0',
-  open: true,
+  open: false,
+  // open: true,
   static: {
     directory: __dirname + '/server',
   },
@@ -161,9 +169,6 @@ module.exports = {
     minimizer: [
       new TerserPlugin({
         minify: TerserPlugin.uglifyJsMinify,
-        // `terserOptions` options will be passed to `uglify-js`
-        // Link to options - https://github.com/mishoo/UglifyJS#minify-options
-        terserOptions: {},
       }),
     ],
   },
