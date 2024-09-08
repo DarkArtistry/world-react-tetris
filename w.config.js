@@ -1,16 +1,11 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const precss = require('precss');
-// const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const version = require('./package.json').version;
 const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
-
-
-const isProductionMode = process.env.NODE_ENV === "production";
-
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 // 程序入口
 const entry = path.join(__dirname, '/src/index.js');
@@ -23,11 +18,6 @@ const output = {
 
 // 生成source-map追踪js错误
 const devtool = 'source-map';
-
-// eslint
-const eslint = {
-  configFile: __dirname + '/.eslintrc.js',
-}
 
 // loader
 const loaders = [
@@ -45,10 +35,6 @@ const loaders = [
       }
     }
   },
-  // {
-  //   test: /\.(?:png|jpg|gif)$/,
-  //   loader: 'url?limit=8192', //小于8k,内嵌;大于8k生成文件
-  // },
   {
     test: /\.(png|jpg|gif)$/i,
     use: [
@@ -60,43 +46,23 @@ const loaders = [
       },
     ],
   },
-  // {
-  //   test: /\.less/,
-  //   loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[hash:base64:4]!postcss!less'),
-  // }
   {
     test: /\.less$/i,
     use: [
-      // compiles Less to CSS
-      // isProductionMode ? MiniCssExtractPlugin.loader : "style-loader",
       MiniCssExtractPlugin.loader,
       {
         loader: "css-loader",
         options: {
           modules: {
-            localIdentName: '[hash:base64:5]',  // Custom class name pattern
+            localIdentName: '[hash:base64:5]',
           },
-          // importLoaders: 1,
-          // sourceMap: true,
         },
       },
       {
         loader: "postcss-loader",
-        // options: {
-        //   postcssOptions: {
-        //     plugins: [
-        //       "autoprefixer",
-        //     ],
-        //   },
-        //   sourceMap: true,
-        // },
       },
       {
         loader: "less-loader",
-        // options: {
-        //   implementation: require("less"),
-        //   sourceMap: true,
-        // },
       },
     ],
   },
@@ -116,8 +82,16 @@ const devPlugins = [
   new webpack.NoEmitOnErrorsPlugin(),
   // 打开浏览器页面
   // css打包
-  new MiniCssExtractPlugin(),
-]
+  new MiniCssExtractPlugin({
+    filename: 'css/[name].css',
+  }),
+  // HTML 模板
+  new HtmlWebpackPlugin({
+    template: path.join(__dirname, '/server/index.tmpl.html'),
+  }),
+  // Eslint
+  // new ESLintWebpackPlugin() // intentionally disabled this due to bundle of errors because of strict configurations
+];
 
 // production plugin
 const productionPlugins = [
@@ -130,14 +104,18 @@ const productionPlugins = [
     patterns: [
       { from: './src/resource/music/music.mp3' },
       { from: './src/resource/css/loader.css' },
-    ]
+    ],
   }),
   // HTML 模板
   new HtmlWebpackPlugin({
-    template: __dirname + '/server/index.tmpl.html'
+    template: path.join(__dirname, '/server/index.tmpl.html'),
   }),
   // css打包
-  new MiniCssExtractPlugin(),
+  new MiniCssExtractPlugin({
+    filename: 'css/[name].css',
+  }),
+  // Eslint
+  // new ESLintWebpackPlugin() // intentionally disabled this due to bundle of errors because of strict configurations
 ];
 
 // dev server
@@ -148,7 +126,7 @@ const devServer = {
   open: false,
   // open: true,
   static: {
-    directory: __dirname + '/server',
+    directory: path.join(__dirname, 'server'),
   },
 };
 
@@ -160,9 +138,6 @@ module.exports = {
   devPlugins,
   productionPlugins,
   devServer,
-  // postcss: function () {
-  //   return [precss, autoprefixer];
-  // },
   version,
   optimization: {
     minimize: true,

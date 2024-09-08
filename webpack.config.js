@@ -1,19 +1,18 @@
-var config = require('./w.config');
+const config = require('./w.config');
+const path = require("path");
 
 // dev环境配置
 module.exports = {
   devtool: config.devtool,
   entry: config.entry,
   output: {
-    path: __dirname + '/server',
+    path: path.join(__dirname, 'server'),
     filename: 'app.js',
   },
-  // eslint: config.eslint,
   module: {
-    rules: config.loaders
+    rules: config.loaders,
   },
   plugins: config.devPlugins,
   devServer: config.devServer,
-  mode: 'development'
-  // postcss: config.postcss
+  mode: 'development',
 };
