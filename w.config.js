@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const version = require('./package.json').version;
 const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
-const ESLintWebpackPlugin = require('eslint-webpack-plugin');
+// const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 // 程序入口
 const entry = path.join(__dirname, '/src/index.js');
@@ -76,8 +76,6 @@ const devPlugins = [
       { from: './src/resource/css/loader.css' },
     ]
   }),
-  // 热更新
-  new webpack.HotModuleReplacementPlugin(),
   // 允许错误不打断程序, 仅开发模式需要
   new webpack.NoEmitOnErrorsPlugin(),
   // 打开浏览器页面
@@ -123,8 +121,7 @@ const devServer = {
   historyApiFallback: false,
   port: 8080, // defaults to "8080"
   host: '0.0.0.0',
-  open: false,
-  // open: true,
+  open: true,
   static: {
     directory: path.join(__dirname, 'server'),
   },

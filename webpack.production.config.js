@@ -1,5 +1,5 @@
-const config = require('./w.config');
 const path = require('path');
+const config = require('./w.config');
 
 // production环境配置
 module.exports = {

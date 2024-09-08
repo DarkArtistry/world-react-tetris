@@ -8,7 +8,8 @@ module.exports = {
         "func-names": [0],
         "new-cap": [2, { newIsCap: true ,capIsNew: true, capIsNewExceptions: ['List', 'Map']}],
         "linebreak-style": [0],
-        "quotes": [0]
+        "quotes": [0],
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
     },
     "env": {
         "browser": true,
