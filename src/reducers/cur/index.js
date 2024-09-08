@@ -7,11 +7,11 @@ const initState = (() => {
   if (!lastRecord || !lastRecord.cur) { // 无记录 或 有记录 但方块为空, 返回 null
     return null;
   }
-  const cur = lastRecord.cur;
+  const { cur } = lastRecord;
   const option = {
     type: cur.type,
     rotateIndex: cur.rotateIndex,
-    shape: List(cur.shape.map(e => List(e))),
+    shape: List(cur.shape.map((e) => List(e))),
     xy: cur.xy,
   };
   return new Block(option);

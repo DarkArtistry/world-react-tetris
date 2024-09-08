@@ -14,7 +14,7 @@ const keyboard = {
 
 let keydownActive;
 
-const boardKeys = Object.keys(keyboard).map(e => parseInt(e, 10));
+const boardKeys = Object.keys(keyboard).map((e) => parseInt(e, 10));
 
 const keyDown = (e) => {
   if (e.metaKey === true || boardKeys.indexOf(e.keyCode) === -1) {
@@ -41,4 +41,3 @@ const keyUp = (e) => {
 
 document.addEventListener('keydown', keyDown, true);
 document.addEventListener('keyup', keyUp, true);
-

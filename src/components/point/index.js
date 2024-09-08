@@ -16,16 +16,20 @@ export default class Point extends React.Component {
       number: 0,
     };
   }
+
   componentWillMount() {
     this.onChange(this.props);
   }
+
   componentWillReceiveProps(nextProps) {
     this.onChange(nextProps);
   }
+
   shouldComponentUpdate({ cur, point, max }) {
-    const props = this.props;
+    const { props } = this;
     return cur !== props.cur || point !== props.point || max !== props.max || !props.cur;
   }
+
   onChange({ cur, point, max }) {
     clearInterval(Point.timeout);
     if (cur) { // 在游戏进行中
@@ -58,6 +62,7 @@ export default class Point extends React.Component {
       }
     }
   }
+
   render() {
     return (
       <div>
@@ -77,4 +82,3 @@ Point.propTypes = {
   max: propTypes.number.isRequired,
   point: propTypes.number.isRequired,
 };
-

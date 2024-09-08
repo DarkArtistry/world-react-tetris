@@ -1,4 +1,4 @@
-import { want } from '../../unit/';
+import { want } from "../../unit";
 import event from '../../unit/event';
 import actions from '../../actions';
 import states from '../states';

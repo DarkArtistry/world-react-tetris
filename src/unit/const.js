@@ -87,7 +87,7 @@ export const maxPoint = 999999;
 
 export const transform = (function () {
   const trans = ['transform', 'webkitTransform', 'msTransform', 'mozTransform', 'oTransform'];
-  const body = document.body;
+  const { body } = document;
   return trans.filter((e) => body.style[e] !== undefined)[0];
 }());
 

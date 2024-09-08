@@ -1,8 +1,8 @@
 import * as reducerType from '../../unit/reducerType';
 import { lastRecord, maxPoint } from '../../unit/const';
 
-let initState = lastRecord && !isNaN(parseInt(lastRecord.points, 10)) ?
-  parseInt(lastRecord.points, 10) : 0;
+let initState = lastRecord && !isNaN(parseInt(lastRecord.points, 10))
+  ? parseInt(lastRecord.points, 10) : 0;
 
 if (initState < 0) {
   initState = 0;

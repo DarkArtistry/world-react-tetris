@@ -1,4 +1,4 @@
-import { want } from '../../unit/';
+import { want } from "../../unit";
 import event from '../../unit/event';
 import actions from '../../actions';
 import states from '../states';
@@ -32,8 +32,8 @@ const down = (store) => {
         let matrix = state.get('matrix');
         bottom = cur.fall(index - 2);
         store.dispatch(actions.moveBlock(bottom));
-        const shape = bottom.shape;
-        const xy = bottom.xy;
+        const { shape } = bottom;
+        const { xy } = bottom;
         shape.forEach((m, k1) => (
           m.forEach((n, k2) => {
             if (n && xy[0] + k1 >= 0) { // 竖坐标可以为负

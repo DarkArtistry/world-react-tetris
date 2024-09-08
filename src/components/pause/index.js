@@ -11,19 +11,23 @@ export default class Pause extends React.Component {
       showPause: false,
     };
   }
+
   componentDidMount() {
     this.setShake(this.props.data);
   }
+
   componentWillReceiveProps({ data }) {
     this.setShake(data);
   }
+
   shouldComponentUpdate({ data }) {
     if (data) { // 如果暂停了, 不会有太多的dispatch, 考虑到闪烁效果, 直接返回true
       return true;
     }
     return data !== this.props.data;
   }
-  setShake(bool) {  // 根据props显示闪烁或停止闪烁
+
+  setShake(bool) { // 根据props显示闪烁或停止闪烁
     if (bool && !Pause.timeout) {
       Pause.timeout = setInterval(() => {
         this.setState({
@@ -39,6 +43,7 @@ export default class Pause extends React.Component {
       Pause.timeout = null;
     }
   }
+
   render() {
     return (
       <div
@@ -47,7 +52,7 @@ export default class Pause extends React.Component {
             bg: true,
             [style.pause]: true,
             [style.c]: this.state.showPause,
-          }
+          },
         )}
       />
     );

@@ -1,5 +1,5 @@
 import * as reducerType from '../../unit/reducerType';
-import { isFocus } from '../../unit/';
+import { isFocus } from "../../unit";
 
 const initState = isFocus();
 const focus = (state = initState, action) => {

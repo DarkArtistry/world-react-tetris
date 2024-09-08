@@ -31,8 +31,8 @@ export const getNextType = () => { // 随机获取下一个方块类型
 };
 
 export const want = (next, matrix) => { // 方块是否能移到到指定位置
-  const xy = next.xy;
-  const shape = next.shape;
+  const { xy } = next;
+  const { shape } = next;
   const horizontal = shape.get(0).size;
   return shape.every((m, k1) => (
     m.every((n, k2) => {
@@ -62,7 +62,7 @@ export const want = (next, matrix) => { // 方块是否能移到到指定位置
 export const isClear = (matrix) => { // 是否达到消除状态
   const clearLines = [];
   matrix.forEach((m, k) => {
-    if (m.every(n => !!n)) {
+    if (m.every((n) => !!n)) {
       clearLines.push(k);
     }
   });
@@ -72,8 +72,8 @@ export const isClear = (matrix) => { // 是否达到消除状态
   return clearLines;
 };
 
-export const isOver = (matrix) =>  // 游戏是否结束, 第一行落下方块为依据
-   matrix.get(0).some(n => !!n);
+export const isOver = (matrix) => // 游戏是否结束, 第一行落下方块为依据
+  matrix.get(0).some((n) => !!n);
 
 export const subscribeRecord = (store) => { // 将状态记录到 localStorage
   store.subscribe(() => {

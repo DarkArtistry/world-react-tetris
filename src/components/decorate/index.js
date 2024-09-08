@@ -8,6 +8,7 @@ export default class Decorate extends React.Component {
   shouldComponentUpdate() {
     return false;
   }
+
   render() {
     return (
       <div className={style.decorate}>

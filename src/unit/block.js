@@ -18,7 +18,7 @@ class Block {
     }
 
     if (!option.shape) { // init
-      this.shape = List(blockShape[option.type].map(e => List(e)));
+      this.shape = List(blockShape[option.type].map((e) => List(e)));
     } else {
       this.shape = option.shape;
     }
@@ -52,10 +52,11 @@ class Block {
       this.xy = List(option.xy);
     }
   }
+
   rotate() {
-    const shape = this.shape;
+    const { shape } = this;
     let result = List([]);
-    shape.forEach(m => m.forEach((n, k) => {
+    shape.forEach((m) => m.forEach((n, k) => {
       const index = m.size - k - 1;
       if (result.get(index) === undefined) {
         result = result.set(index, List([]));
@@ -67,8 +68,8 @@ class Block {
       this.xy.get(0) + origin[this.type][this.rotateIndex][0],
       this.xy.get(1) + origin[this.type][this.rotateIndex][1],
     ];
-    const nextRotateIndex = this.rotateIndex + 1 >= origin[this.type].length ?
-      0 : this.rotateIndex + 1;
+    const nextRotateIndex = this.rotateIndex + 1 >= origin[this.type].length
+      ? 0 : this.rotateIndex + 1;
     return {
       shape: result,
       type: this.type,
@@ -77,6 +78,7 @@ class Block {
       timeStamp: this.timeStamp,
     };
   }
+
   fall(n = 1) {
     return {
       shape: this.shape,
@@ -86,6 +88,7 @@ class Block {
       timeStamp: Date.now(),
     };
   }
+
   right() {
     return {
       shape: this.shape,
@@ -95,6 +98,7 @@ class Block {
       timeStamp: this.timeStamp,
     };
   }
+
   left() {
     return {
       shape: this.shape,

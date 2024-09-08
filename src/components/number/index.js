@@ -18,7 +18,6 @@ const formate = (num) => (
   num < 10 ? `0${num}`.split('') : `${num}`.split('')
 );
 
-
 export default class Number extends React.Component {
   constructor() {
     super();
@@ -27,6 +26,7 @@ export default class Number extends React.Component {
       time: new Date(),
     };
   }
+
   componentWillMount() {
     if (!this.props.time) {
       return;
@@ -43,6 +43,7 @@ export default class Number extends React.Component {
     };
     clock();
   }
+
   shouldComponentUpdate({ number }) {
     if (this.props.time) { // 右下角时钟
       if (this.state.time_count !== Number.time_count) {
@@ -55,12 +56,14 @@ export default class Number extends React.Component {
     }
     return this.props.number !== number;
   }
+
   componentWillUnmount() {
     if (!this.props.time) {
       return;
     }
     clearTimeout(Number.timeInterval);
   }
+
   render() {
     if (this.props.time) { // 右下角时钟
       const now = this.state.time;

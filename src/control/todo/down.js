@@ -1,4 +1,4 @@
-import { want } from '../../unit/';
+import { want } from "../../unit";
 import event from '../../unit/event';
 import actions from '../../actions';
 import states from '../states';
@@ -33,8 +33,8 @@ const down = (store) => {
           states.auto();
         } else {
           let matrix = state.get('matrix');
-          const shape = cur.shape;
-          const xy = cur.xy;
+          const { shape } = cur;
+          const { xy } = cur;
           shape.forEach((m, k1) => (
             m.forEach((n, k2) => {
               if (n && xy.get(0) + k1 >= 0) { // 竖坐标可以为负
@@ -79,7 +79,6 @@ const up = (store) => {
     key: 'down',
   });
 };
-
 
 export default {
   down,

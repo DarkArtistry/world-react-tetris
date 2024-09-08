@@ -70,11 +70,13 @@ export default class Keyboard extends React.Component {
       }, true);
     });
   }
+
   shouldComponentUpdate({ keyboard, filling }) {
     return !Immutable.is(keyboard, this.props.keyboard) || filling !== this.props.filling;
   }
+
   render() {
-    const keyboard = this.props.keyboard;
+    const { keyboard } = this.props;
     return (
       <div
         className={style.keyboard}
