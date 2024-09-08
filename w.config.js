@@ -1,10 +1,10 @@
+const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const version = require('./package.json').version;
 const TerserPlugin = require("terser-webpack-plugin");
-const path = require("path");
+const { version } = require('./package.json');
 // const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 // 程序入口
