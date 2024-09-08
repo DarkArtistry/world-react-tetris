@@ -9,12 +9,12 @@ const AudioContext = (
   window.msAudioContext
 );
 
-const hasWebAudioAPI = {
+export const hasWebAudioAPI = {
   data: !!AudioContext && location.protocol.indexOf('http') !== -1,
 };
 
 
-const music = {};
+export const music = {};
 
 (() => {
   if (!hasWebAudioAPI.data) {
@@ -92,9 +92,3 @@ const music = {};
 
   req.send();
 })();
-
-module.exports = {
-  hasWebAudioAPI,
-  music,
-};
-

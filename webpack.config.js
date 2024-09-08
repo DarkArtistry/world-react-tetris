@@ -8,11 +8,12 @@ module.exports = {
     path: __dirname + '/server',
     filename: 'app.js',
   },
-  eslint: config.eslint,
+  // eslint: config.eslint,
   module: {
-    loaders: config.loaders
+    rules: config.loaders
   },
   plugins: config.devPlugins,
   devServer: config.devServer,
-  postcss: config.postcss
+  mode: 'development'
+  // postcss: config.postcss
 };

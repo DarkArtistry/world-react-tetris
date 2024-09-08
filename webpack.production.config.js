@@ -6,12 +6,13 @@ module.exports = {
   entry: config.entry,
   output: {
     path: __dirname + '/docs',
-    filename: 'app-' + config.version+'.js',
+    filename: 'app-' + config.version + '.js',
   },
-  eslint: config.eslint,
+  // eslint: config.eslint,
   module: {
-    loaders: config.loaders
+    rules: config.loaders
   },
   plugins: config.productionPlugins,
-  postcss: config.postcss
+  mode: 'production'
+  // postcss: config.postcss
 };
