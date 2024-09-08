@@ -30,10 +30,10 @@ const loaders = [
         presets: [
           ['@babel/preset-env', {
             targets: 'defaults',
-          }]
+          }],
         ],
-      }
-    }
+      },
+    },
   },
   {
     test: /\.(png|jpg|gif)$/i,
@@ -74,7 +74,7 @@ const devPlugins = [
     patterns: [
       { from: './src/resource/music/music.mp3' },
       { from: './src/resource/css/loader.css' },
-    ]
+    ],
   }),
   // 允许错误不打断程序, 仅开发模式需要
   new webpack.NoEmitOnErrorsPlugin(),
@@ -88,7 +88,8 @@ const devPlugins = [
     template: path.join(__dirname, '/server/index.tmpl.html'),
   }),
   // Eslint
-  // new ESLintWebpackPlugin() // intentionally disabled this due to bundle of errors because of strict configurations
+  // intentionally disabled this due to bundle of errors because of strict configurations
+  // new ESLintWebpackPlugin()
 ];
 
 // production plugin
@@ -113,7 +114,8 @@ const productionPlugins = [
     filename: 'css/[name].css',
   }),
   // Eslint
-  // new ESLintWebpackPlugin() // intentionally disabled this due to bundle of errors because of strict configurations
+  // intentionally disabled this due to bundle of errors because of strict configurations
+  // new ESLintWebpackPlugin()
 ];
 
 // dev server
