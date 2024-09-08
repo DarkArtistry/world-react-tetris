@@ -30,7 +30,6 @@ const up = (store) => {
   });
 };
 
-
 export default {
   down,
   up,

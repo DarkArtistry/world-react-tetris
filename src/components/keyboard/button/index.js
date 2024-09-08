@@ -2,13 +2,14 @@ import React from 'react';
 import cn from 'classnames';
 import propTypes from 'prop-types';
 
-import style from './index.less';
+import * as style from './index.less';
 import { transform } from '../../../unit/const';
 
 export default class Button extends React.Component {
   shouldComponentUpdate(nextProps) {
     return nextProps.active !== this.props.active;
   }
+
   render() {
     const {
       active, color, size, top, left, label, position, arrow,
@@ -22,11 +23,13 @@ export default class Button extends React.Component {
           className={cn({ [style.active]: active })}
           ref={(c) => { this.dom = c; }}
         />
-        { size === 's1' && <em
+        { size === 's1' && (
+        <em
           style={{
             [transform]: `${arrow} scale(1,2)`,
           }}
-        /> }
+        />
+        ) }
         <span className={cn({ [style.position]: position })}>{label}</span>
       </div>
     );
@@ -43,4 +46,3 @@ Button.propTypes = {
   arrow: propTypes.string,
   active: propTypes.bool.isRequired,
 };
-

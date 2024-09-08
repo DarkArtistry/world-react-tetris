@@ -2,12 +2,13 @@ import React from 'react';
 import cn from 'classnames';
 
 import { i18n, lan } from '../../unit/const';
-import style from './index.less';
+import * as style from './index.less';
 
 export default class Decorate extends React.Component {
   shouldComponentUpdate() {
     return false;
   }
+
   render() {
     return (
       <div className={style.decorate}>

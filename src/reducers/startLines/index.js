@@ -1,8 +1,8 @@
 import * as reducerType from '../../unit/reducerType';
 import { lastRecord } from '../../unit/const';
 
-let initState = lastRecord && !isNaN(parseInt(lastRecord.startLines, 10)) ?
-  parseInt(lastRecord.startLines, 10) : 0;
+let initState = lastRecord && !isNaN(parseInt(lastRecord.startLines, 10))
+  ? parseInt(lastRecord.startLines, 10) : 0;
 if (initState < 0 || initState > 10) {
   initState = 0;
 }

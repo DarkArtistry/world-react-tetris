@@ -16,7 +16,6 @@ import drop from './drop';
 import keyboard from './keyboard';
 import focus from './focus';
 
-
 const rootReducer = combineReducers({
   pause,
   music,

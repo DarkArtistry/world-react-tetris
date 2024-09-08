@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-import style from './index.less';
+import * as style from './index.less';
 import { blockShape } from '../../unit/const';
 
 const xy = { // 方块在下一个中的坐标
@@ -26,18 +26,22 @@ export default class Next extends React.Component {
       block: empty,
     };
   }
+
   componentWillMount() {
     this.build(this.props.data);
   }
+
   componentWillReceiveProps(nextProps) {
     this.build(nextProps.data);
   }
+
   shouldComponentUpdate(nextProps) {
     return nextProps.data !== this.props.data;
   }
+
   build(type) {
     const shape = blockShape[type];
-    const block = empty.map(e => ([...e]));
+    const block = empty.map((e) => ([...e]));
     shape.forEach((m, k1) => {
       m.forEach((n, k2) => {
         if (n) {
@@ -47,6 +51,7 @@ export default class Next extends React.Component {
     });
     this.setState({ block });
   }
+
   render() {
     return (
       <div className={style.next}>

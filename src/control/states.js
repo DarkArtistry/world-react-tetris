@@ -1,10 +1,11 @@
 import { List } from 'immutable';
 import store from '../store';
-import { want, isClear, isOver } from '../unit/';
+import { want, isClear, isOver } from "../unit";
 import actions from '../actions';
-import { speeds, blankLine, blankMatrix, clearPoints, eachLines } from '../unit/const';
+import {
+  speeds, blankLine, blankMatrix, clearPoints, eachLines,
+} from '../unit/const';
 import { music } from '../unit/music';
-
 
 const getStartMatrix = (startLines) => { // 生成startLines
   const getLine = (min, max) => { // 返回标亮个数在min~max之间一行方块, (包含边界)
@@ -86,8 +87,10 @@ const states = {
       }
     };
     clearTimeout(states.fallInterval);
-    states.fallInterval = setTimeout(fall,
-      out === undefined ? speeds[state.get('speedRun') - 1] : out);
+    states.fallInterval = setTimeout(
+      fall,
+      out === undefined ? speeds[state.get('speedRun') - 1] : out,
+    );
   },
 
   // 一个方块结束, 触发下一个
@@ -99,8 +102,8 @@ const states = {
       stopDownTrigger();
     }
 
-    const addPoints = (store.getState().get('points') + 10) +
-      ((store.getState().get('speedRun') - 1) * 2); // 速度越快, 得分越高
+    const addPoints = (store.getState().get('points') + 10)
+      + ((store.getState().get('speedRun') - 1) * 2); // 速度越快, 得分越高
 
     states.dispatchPoints(addPoints);
 
@@ -152,7 +155,7 @@ const states = {
   clearLines: (matrix, lines) => {
     const state = store.getState();
     let newMatrix = matrix;
-    lines.forEach(n => {
+    lines.forEach((n) => {
       newMatrix = newMatrix.splice(n, 1);
       newMatrix = newMatrix.unshift(List(blankLine));
     });
@@ -164,8 +167,8 @@ const states = {
     const clearLines = state.get('clearLines') + lines.length;
     store.dispatch(actions.clearLines(clearLines)); // 更新消除行
 
-    const addPoints = store.getState().get('points') +
-      clearPoints[lines.length - 1]; // 一次消除的行越多, 加分越多
+    const addPoints = store.getState().get('points')
+      + clearPoints[lines.length - 1]; // 一次消除的行越多, 加分越多
     states.dispatchPoints(addPoints);
 
     const speedAdd = Math.floor(clearLines / eachLines); // 消除行数, 增加对应速度

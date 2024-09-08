@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import propTypes from 'prop-types';
 
-import style from './index.less';
+import * as style from './index.less';
 
 import Matrix from '../components/matrix';
 import Decorate from '../components/decorate';
@@ -16,8 +16,10 @@ import Logo from '../components/logo';
 import Keyboard from '../components/keyboard';
 // import Guide from '../components/guide';
 
-import { transform, lastRecord, speeds, i18n, lan } from '../unit/const';
-import { visibilityChangeEvent, isFocus } from '../unit/';
+import {
+  transform, lastRecord, speeds, i18n, lan,
+} from '../unit/const';
+import { visibilityChangeEvent, isFocus } from "../unit";
 import states from '../control/states';
 
 class App extends React.Component {
@@ -28,9 +30,11 @@ class App extends React.Component {
       h: document.documentElement.clientHeight,
     };
   }
+
   componentWillMount() {
     window.addEventListener('resize', this.resize.bind(this), true);
   }
+
   componentDidMount() {
     if (visibilityChangeEvent) { // 将页面的焦点变换写入store
       document.addEventListener(visibilityChangeEvent, () => {
@@ -40,7 +44,7 @@ class App extends React.Component {
 
     if (lastRecord) { // 读取记录
       if (lastRecord.cur && !lastRecord.pause) { // 拿到上一次游戏的状态, 如果在游戏中且没有暂停, 游戏继续
-        const speedRun = this.props.speedRun;
+        const { speedRun } = this.props;
         let timeout = speeds[speedRun - 1] / 2; // 继续时, 给予当前下落速度一半的停留时间
         // 停留时间不小于最快速的速度
         timeout = speedRun < speeds[speeds.length - 1] ? speeds[speeds.length - 1] : speedRun;
@@ -53,17 +57,19 @@ class App extends React.Component {
       states.overStart();
     }
   }
+
   resize() {
     this.setState({
       w: document.documentElement.clientWidth,
       h: document.documentElement.clientHeight,
     });
   }
+
   render() {
     let filling = 0;
     const size = (() => {
-      const w = this.state.w;
-      const h = this.state.h;
+      const { w } = this.state;
+      const { h } = this.state;
       const ratio = h / w;
       let scale;
       let css = {};

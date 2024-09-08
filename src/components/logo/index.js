@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import propTypes from 'prop-types';
 
-import style from './index.less';
+import * as style from './index.less';
 import { i18n, lan } from '../../unit/const';
 
 export default class Logo extends React.Component {
@@ -13,23 +13,27 @@ export default class Logo extends React.Component {
       display: 'none',
     };
   }
+
   componentWillMount() {
     this.animate(this.props);
   }
+
   componentWillReceiveProps(nextProps) {
     if ( // 只有在游戏进入开始, 或结束时 触发改变
       (
-        [this.props.cur, nextProps.cur].indexOf(false) !== -1 &&
-        (this.props.cur !== nextProps.cur)
-      ) ||
-      (this.props.reset !== nextProps.reset)
+        [this.props.cur, nextProps.cur].indexOf(false) !== -1
+        && (this.props.cur !== nextProps.cur)
+      )
+      || (this.props.reset !== nextProps.reset)
     ) {
       this.animate(nextProps);
     }
   }
+
   shouldComponentUpdate({ cur, reset }) {
     return cur !== this.props.cur || reset !== this.props.reset || !cur;
   }
+
   animate({ cur, reset }) {
     clearTimeout(Logo.timeout);
     this.setState({
@@ -130,6 +134,7 @@ export default class Logo extends React.Component {
       });
     });
   }
+
   render() {
     if (this.props.cur) {
       return null;
