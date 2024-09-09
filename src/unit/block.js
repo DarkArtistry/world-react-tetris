@@ -1,5 +1,5 @@
-import { List } from 'immutable';
-import { blockShape, origin } from './const';
+import { List } from "immutable";
+import { blockShape, origin } from "./const";
 
 class Block {
   constructor(option) {
@@ -17,32 +17,33 @@ class Block {
       this.timeStamp = option.timeStamp;
     }
 
-    if (!option.shape) { // init
+    if (!option.shape) {
+      // init
       this.shape = List(blockShape[option.type].map((e) => List(e)));
     } else {
       this.shape = option.shape;
     }
     if (!option.xy) {
       switch (option.type) {
-        case 'I': // I
+        case "I": // I
           this.xy = List([0, 3]);
           break;
-        case 'L': // L
+        case "L": // L
           this.xy = List([-1, 4]);
           break;
-        case 'J': // J
+        case "J": // J
           this.xy = List([-1, 4]);
           break;
-        case 'Z': // Z
+        case "Z": // Z
           this.xy = List([-1, 4]);
           break;
-        case 'S': // S
+        case "S": // S
           this.xy = List([-1, 4]);
           break;
-        case 'O': // O
+        case "O": // O
           this.xy = List([-1, 4]);
           break;
-        case 'T': // T
+        case "T": // T
           this.xy = List([-1, 4]);
           break;
         default:
@@ -56,20 +57,24 @@ class Block {
   rotate() {
     const { shape } = this;
     let result = List([]);
-    shape.forEach((m) => m.forEach((n, k) => {
-      const index = m.size - k - 1;
-      if (result.get(index) === undefined) {
-        result = result.set(index, List([]));
-      }
-      const tempK = result.get(index).push(n);
-      result = result.set(index, tempK);
-    }));
+    shape.forEach((m) =>
+      m.forEach((n, k) => {
+        const index = m.size - k - 1;
+        if (result.get(index) === undefined) {
+          result = result.set(index, List([]));
+        }
+        const tempK = result.get(index).push(n);
+        result = result.set(index, tempK);
+      })
+    );
     const nextXy = [
       this.xy.get(0) + origin[this.type][this.rotateIndex][0],
       this.xy.get(1) + origin[this.type][this.rotateIndex][1],
     ];
-    const nextRotateIndex = this.rotateIndex + 1 >= origin[this.type].length
-      ? 0 : this.rotateIndex + 1;
+    const nextRotateIndex =
+      this.rotateIndex + 1 >= origin[this.type].length
+        ? 0
+        : this.rotateIndex + 1;
     return {
       shape: result,
       type: this.type,

@@ -1,21 +1,21 @@
-import React from 'react';
+import React from "react";
 // import QRCode from 'qrcode';
-import * as style from './index.less';
-import { transform,
+import * as style from "./index.less";
+import {
+  transform,
   // i18n, lan
-} from '../../unit/const';
-import { isMobile } from '../../unit';
-
+} from "../../unit/const";
+import { unit } from "../../unit";
 
 export default class Guide extends React.Component {
   constructor() {
     super();
     this.state = {
-      isMobile: isMobile(),
-      QRCode: '',
+      isMobile: unit.isMobile(),
+      QRCode: "",
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.state.isMobile) {
       return;
     }
@@ -31,23 +31,34 @@ export default class Guide extends React.Component {
   }
   render() {
     if (this.state.isMobile) {
-      return (
-        null
-      );
+      return null;
     }
     return (
-      <div style={{ display: this.state.isMobile ? 'none' : 'block' }}>
+      <div style={{ display: this.state.isMobile ? "none" : "block" }}>
         <div className={`${style.guide} ${style.right}`}>
           <div className={style.up}>
-            <em style={{ [transform]: 'translate(0,-3px) scale(1,2)' }} />
+            <em style={{ [transform]: "translate(0,-3px) scale(1,2)" }} />
           </div>
           <div className={style.left}>
-            <em style={{ [transform]: 'translate(-7px,3px) rotate(-90deg) scale(1,2)' }} />
+            <em
+              style={{
+                [transform]: "translate(-7px,3px) rotate(-90deg) scale(1,2)",
+              }}
+            />
           </div>
           <div className={style.down}>
-            <em style={{ [transform]: 'translate(0,9px) rotate(180deg) scale(1,2)' }} /></div>
+            <em
+              style={{
+                [transform]: "translate(0,9px) rotate(180deg) scale(1,2)",
+              }}
+            />
+          </div>
           <div className={style.right}>
-            <em style={{ [transform]: 'translate(7px,3px)rotate(90deg) scale(1,2)' }} />
+            <em
+              style={{
+                [transform]: "translate(7px,3px)rotate(90deg) scale(1,2)",
+              }}
+            />
           </div>
         </div>
         <div className={`${style.guide} ${style.left}`}>
@@ -85,4 +96,3 @@ export default class Guide extends React.Component {
     );
   }
 }
-

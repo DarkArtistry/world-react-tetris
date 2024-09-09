@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import { MiniKit } from "@worldcoin/minikit-js";
-import propTypes from 'prop-types';
+import propTypes from "prop-types";
 
 export default class MiniKitProvider extends React.Component {
   componentDidMount() {

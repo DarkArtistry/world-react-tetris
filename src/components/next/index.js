@@ -1,10 +1,11 @@
-import React from 'react';
-import propTypes from 'prop-types';
+import React from "react";
+import propTypes from "prop-types";
 
-import * as style from './index.less';
-import { blockShape } from '../../unit/const';
+import * as style from "./index.less";
+import { blockShape } from "../../unit/const";
 
-const xy = { // 方块在下一个中的坐标
+const xy = {
+  // 方块在下一个中的坐标
   I: [1, 0],
   L: [0, 0],
   J: [0, 0],
@@ -26,12 +27,10 @@ export default class Next extends React.Component {
       block: empty,
     };
   }
-
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.build(this.props.data);
   }
-
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.build(nextProps.data);
   }
 
@@ -41,7 +40,7 @@ export default class Next extends React.Component {
 
   build(type) {
     const shape = blockShape[type];
-    const block = empty.map((e) => ([...e]));
+    const block = empty.map((e) => [...e]);
     shape.forEach((m, k1) => {
       m.forEach((n, k2) => {
         if (n) {
@@ -55,17 +54,13 @@ export default class Next extends React.Component {
   render() {
     return (
       <div className={style.next}>
-        {
-          this.state.block.map((arr, k1) => (
-            <div key={k1}>
-              {
-                arr.map((e, k2) => (
-                  <b className={e ? 'c' : ''} key={k2} />
-                ))
-              }
-            </div>
-          ))
-        }
+        {this.state.block.map((arr, k1) => (
+          <div key={k1}>
+            {arr.map((e, k2) => (
+              <b className={e ? "c" : ""} key={k2} />
+            ))}
+          </div>
+        ))}
       </div>
     );
   }

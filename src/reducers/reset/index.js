@@ -1,5 +1,5 @@
-import * as reducerType from '../../unit/reducerType';
-import { lastRecord } from '../../unit/const';
+import * as reducerType from "../../unit/reducerType";
+import { lastRecord } from "../../unit/const";
 
 const initState = lastRecord && lastRecord.reset ? !!lastRecord.reset : false;
 const reset = (state = initState, action) => {

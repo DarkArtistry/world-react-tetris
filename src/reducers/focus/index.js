@@ -1,7 +1,7 @@
-import * as reducerType from '../../unit/reducerType';
-import { isFocus } from "../../unit";
+import * as reducerType from "../../unit/reducerType";
+import { unit } from "../../unit";
 
-const initState = isFocus();
+const initState = unit.isFocus();
 const focus = (state = initState, action) => {
   switch (action.type) {
     case reducerType.FOCUS:

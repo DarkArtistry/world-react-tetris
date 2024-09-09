@@ -1,8 +1,8 @@
-import React from 'react';
-import cn from 'classnames';
-import propTypes from 'prop-types';
+import React from "react";
+import cn from "classnames";
+import propTypes from "prop-types";
 
-import * as style from './index.less';
+import * as style from "./index.less";
 
 export default class Music extends React.Component {
   shouldComponentUpdate({ data }) {
@@ -12,13 +12,11 @@ export default class Music extends React.Component {
   render() {
     return (
       <div
-        className={cn(
-          {
-            bg: true,
-            [style.music]: true,
-            [style.c]: !this.props.data,
-          },
-        )}
+        className={cn({
+          bg: true,
+          [style.music]: true,
+          [style.c]: !this.props.data,
+        })}
       />
     );
   }
