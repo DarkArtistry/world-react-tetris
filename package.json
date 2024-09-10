@@ -51,8 +51,9 @@
     "webpack-dev-server": "^5.1.0"
   },
   "dependencies": {
-    "@worldcoin/minikit-js": "0.0.2",
+    "@worldcoin/minikit-js": "0.0.27-internal-alpha",
     "classnames": "^2.2.5",
+    "ethers": "^6.13.2",
     "firebase": "^10.13.1",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.10",

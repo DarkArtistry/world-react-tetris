@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import propTypes from 'prop-types';
-
+import { MiniKit, tokenToDecimals, Tokens, PayCommandInput } from '@worldcoin/minikit-js';
 import * as style from './index.less';
 
 import Matrix from '../components/matrix';
@@ -28,10 +28,15 @@ class App extends React.Component {
     this.state = {
       w: document.documentElement.clientWidth,
       h: document.documentElement.clientHeight,
+      isInverse: false, // Add this line
     };
+    this.handleButtonClick = this.handleButtonClick.bind(this); // Add this line
+    this.handleButtonState = this.handleButtonState.bind(this); // Add this line
+    this.sendPayment = this.sendPayment.bind(this); // Add this line
   }
 
   componentWillMount() {
+    MiniKit.install();
     window.addEventListener('resize', this.resize.bind(this), true);
   }
 
@@ -58,12 +63,60 @@ class App extends React.Component {
     }
   }
 
+  handleButtonState() {
+    this.setState({
+      ...this.state,
+      isInverse: !this.state.isInverse,
+    });
+  }
+
+  handleButtonClick() {
+    this.handleButtonState();
+    const that = this;
+    setTimeout(() => {
+      that.handleButtonState();
+    }, 1000);
+    
+    this.sendPayment();
+  }
+
+  async sendPayment() {
+    console.log("MiniKit.isInstalled() : ", MiniKit.isInstalled());
+    const res = await fetch('/api/initiate-payment', {
+      method: 'POST',
+    });
+    const { id } = await res.json();
+
+    const payload = {
+      reference: id,
+      to: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // Test address
+      tokens: [
+        {
+          symbol: Tokens.WLD,
+          token_amount: tokenToDecimals(1, Tokens.WLD).toString(),
+        },
+        {
+          symbol: Tokens.USDCE,
+          token_amount: tokenToDecimals(3, Tokens.USDCE).toString(),
+        },
+      ],
+      description: "Test example payment for minikit",
+    };
+
+    MiniKit.commands.pay(payload);
+
+    if (MiniKit.isInstalled()) {
+      MiniKit.commands.pay(payload);
+    }
+  }
+
   resize() {
     this.setState({
       w: document.documentElement.clientWidth,
       h: document.documentElement.clientHeight,
     });
   }
+  
 
   render() {
     let filling = 0;
@@ -94,6 +147,15 @@ class App extends React.Component {
         style={size}
       >
         <div className={classnames({ [style.rect]: true, [style.drop]: this.props.drop })}>
+        <div className={style.buttonContainer}>
+          <button 
+            type="button" 
+            className={classnames(style.button, { [style.inverse]: this.state.isInverse })}
+            onClick={this.handleButtonClick}
+          >
+            Donate!
+          </button>
+        </div>
           <Decorate />
           <div className={style.screen}>
             <div className={style.panel}>

@@ -7,6 +7,8 @@ import {
 } from '../unit/const';
 import { music } from '../unit/music';
 
+let initGame = true;
+
 const getStartMatrix = (startLines) => { // 生成startLines
   const getLine = (min, max) => { // 返回标亮个数在min~max之间一行方块, (包含边界)
     const count = parseInt((((max - min) + 1) * Math.random()) + min, 10);
@@ -192,6 +194,13 @@ const states = {
     store.dispatch(actions.reset(false));
     store.dispatch(actions.lock(false));
     store.dispatch(actions.clearLines(0));
+    const endPoints = store.getState().get('points');
+    if (endPoints > 0 && !initGame) {
+      // Pay to submit score here
+    }
+    if (initGame) {
+      initGame = false;
+    }
   },
 
   // 写入分数
