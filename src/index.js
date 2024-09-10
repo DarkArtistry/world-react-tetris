@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import MiniKitProvider from './components/minikit-provider';
 import store from './store';
 import App from "./containers";
-import MiniKitProvider from './components/minikit-provider';
 import './unit/const';
 import './control';
 import { subscribeRecord } from './unit';
