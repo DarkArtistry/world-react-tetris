@@ -1,7 +1,8 @@
-import * as reducerType from '../../unit/reducerType';
-import { lastRecord } from '../../unit/const';
+import * as reducerType from "../../unit/reducerType";
+import { lastRecord } from "../../unit/const";
 
-const initState = lastRecord && lastRecord.pause !== undefined ? !!lastRecord.pause : false;
+const initState =
+  lastRecord && lastRecord.pause !== undefined ? !!lastRecord.pause : false;
 const pause = (state = initState, action) => {
   switch (action.type) {
     case reducerType.PAUSE:

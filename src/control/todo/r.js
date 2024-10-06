@@ -1,15 +1,15 @@
-import event from '../../unit/event';
-import states from '../states';
-import actions from '../../actions';
+import event from "../../unit/event";
+import states from "../states";
+import actions from "../../actions";
 
 const down = (store) => {
   store.dispatch(actions.keyboard.reset(true));
-  if (store.getState().get('lock')) {
+  if (store.getState().get("lock")) {
     return;
   }
-  if (store.getState().get('cur') !== null) {
+  if (store.getState().get("cur") !== null) {
     event.down({
-      key: 'r',
+      key: "r",
       once: true,
       callback: () => {
         states.overStart();
@@ -17,10 +17,10 @@ const down = (store) => {
     });
   } else {
     event.down({
-      key: 'r',
+      key: "r",
       once: true,
       callback: () => {
-        if (store.getState().get('lock')) {
+        if (store.getState().get("lock")) {
           return;
         }
         states.start();
@@ -32,7 +32,7 @@ const down = (store) => {
 const up = (store) => {
   store.dispatch(actions.keyboard.reset(false));
   event.up({
-    key: 'r',
+    key: "r",
   });
 };
 

@@ -1,18 +1,21 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import MiniKitProvider from './components/minikit-provider';
-import store from './store';
+import React from "react";
+import { createRoot } from "react-dom/client"; // Import createRoot from 'react-dom/client'
+import { Provider } from "react-redux";
+import store from "./store";
 import App from "./containers";
-import './unit/const';
-import './control';
-import { subscribeRecord } from './unit';
+import "./unit/const";
+import "./control";
+import { unit } from "./unit";
 
-subscribeRecord(store); // 将更新的状态记录到localStorage
+// 将更新的状态记录到localStorage
+unit.subscribeRecord(store);
 
-render(
-  <MiniKitProvider><Provider store={store}>
-    <App />
-  </Provider></MiniKitProvider>,
-  document.getElementById('root'),
-);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  const root = createRoot(rootElement); // Create a root
+  root.render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
