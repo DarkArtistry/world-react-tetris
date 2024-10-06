@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import propTypes from "prop-types";
+// eslint-disable-next-line
 import { MiniKit, tokenToDecimals, Tokens } from "@worldcoin/minikit-js";
 import * as style from "./index.less";
 
