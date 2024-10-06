@@ -1,38 +1,46 @@
-body{
+body {
   background: #ffffff;
-  padding: 0;margin:0;
-  font: 20px/1 "HanHei SC","PingHei","PingFang SC","STHeitiSC-Light","Helvetica Neue","Helvetica","Arial",sans-serif;
+  padding: 0;
+  margin: 0;
+  font:
+    20px/1 "HanHei SC",
+    "PingHei",
+    "PingFang SC",
+    "STHeitiSC-Light",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    sans-serif;
   overflow: hidden;
   cursor: default;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -moz-font-feature-settings: 'liga', 'kern';
+  -moz-font-feature-settings: "liga", "kern";
   direction: ltr;
   text-align: left;
 }
 
-:global{
-
-  .r{
+:global {
+  .r {
     float: right;
   }
-  .l{
+  .l {
     float: left;
   }
 
-  .clear{
+  .clear {
     clear: both;
   }
 
-  .bg{
-    background:url('//img.alicdn.com/tps/TB1qq7kNXXXXXacXFXXXXXXXXXX-400-186.png') no-repeat;
-    overflow:hidden;
+  .bg {
+    background: url("//img.alicdn.com/tps/TB1qq7kNXXXXXacXFXXXXXXXXXX-400-186.png")
+      no-repeat;
+    overflow: hidden;
   }
 }
 
-
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -43,8 +51,7 @@ body{
   user-select: none;
 }
 
-
-.app{
+.app {
   width: 640px;
   padding-top: 42px;
   box-shadow: 0 0 10px #fff inset;
@@ -54,7 +61,7 @@ body{
   left: 50%;
   margin: -480px 0 0 -320px;
   background: fcfcfc;
-  :global{
+  :global {
     b {
       display: block;
       width: 20px;
@@ -64,7 +71,7 @@ body{
       margin: 0 2px 2px 0;
       float: left;
       &:after {
-        content: '';
+        content: "";
         display: block;
         width: 12px;
         height: 12px;
@@ -87,25 +94,27 @@ body{
   }
 }
 
-.rect{
+.rect {
   width: 480px;
   padding: 45px 0 35px;
   border: #000 solid;
   border-width: 0 10px 10px;
   margin: 0 auto;
   position: relative;
-  &.drop{ -webkit-transform:translateY(5px);transform:translateY(5px); }
-
+  &.drop {
+    -webkit-transform: translateY(5px);
+    transform: translateY(5px);
+  }
 }
 
-.screen{
+.screen {
   width: 390px;
   height: 478px;
   border: solid 5px;
   border-color: #fcfcfc #fcfcfc #fcfcfc #fcfcfc;
   margin: 0 auto;
   position: relative;
-  .panel{
+  .panel {
     width: 380px;
     height: 468px;
     margin: 0 auto;

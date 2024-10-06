@@ -1,8 +1,8 @@
-import React from 'react';
-import propTypes from 'prop-types';
+import React from "react";
+import propTypes from "prop-types";
 
-import Number from '../number';
-import { i18n, lan } from '../../unit/const';
+import Number from "../number";
+import { i18n, lan } from "../../unit/const";
 
 const DF = i18n.point[lan];
 const ZDF = i18n.highestScore[lan];
@@ -12,33 +12,39 @@ export default class Point extends React.Component {
   constructor() {
     super();
     this.state = {
-      label: '',
+      label: "",
       number: 0,
     };
   }
-
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.onChange(this.props);
   }
-
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.onChange(nextProps);
   }
 
   shouldComponentUpdate({ cur, point, max }) {
-    const { props } = this;
-    return cur !== props.cur || point !== props.point || max !== props.max || !props.cur;
+    const props = this.props;
+    return (
+      cur !== props.cur ||
+      point !== props.point ||
+      max !== props.max ||
+      !props.cur
+    );
   }
 
   onChange({ cur, point, max }) {
     clearInterval(Point.timeout);
-    if (cur) { // 在游戏进行中
+    if (cur) {
+      // 在游戏进行中
       this.setState({
         label: point >= max ? ZDF : DF,
         number: point,
       });
-    } else { // 游戏未开始
-      const toggle = () => { // 最高分与上轮得分交替出现
+    } else {
+      // 游戏未开始
+      const toggle = () => {
+        // 最高分与上轮得分交替出现
         this.setState({
           label: SLDF,
           number: point,
@@ -52,7 +58,8 @@ export default class Point extends React.Component {
         }, 3000);
       };
 
-      if (point !== 0) { // 如果为上轮没玩, 也不用提示了
+      if (point !== 0) {
+        // 如果为上轮没玩, 也不用提示了
         toggle();
       } else {
         this.setState({
@@ -66,7 +73,7 @@ export default class Point extends React.Component {
   render() {
     return (
       <div>
-        <p>{ this.state.label }</p>
+        <p>{this.state.label}</p>
         <Number number={this.state.number} />
       </div>
     );

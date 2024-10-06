@@ -1,9 +1,9 @@
-import { getNextType } from '../unit';
-import * as reducerType from '../unit/reducerType';
-import Block from '../unit/block';
-import keyboard from './keyboard';
+import { unit } from "../unit";
+import * as reducerType from "../unit/reducerType";
+import Block from "../unit/block";
+import keyboard from "./keyboard";
 
-function nextBlock(next = getNextType()) {
+function nextBlock(next = unit.getNextType()) {
   return {
     type: reducerType.NEXT_BLOCK,
     data: next,

@@ -1,9 +1,11 @@
-import { getNextType } from '../../unit';
-import * as reducerType from '../../unit/reducerType';
-import { lastRecord, blockType } from '../../unit/const';
+import { unit } from "../../unit";
+import * as reducerType from "../../unit/reducerType";
+import { lastRecord, blockType } from "../../unit/const";
 
-const initState = lastRecord && blockType.indexOf(lastRecord.next) !== -1
-  ? lastRecord.next : getNextType();
+const initState =
+  lastRecord && blockType.indexOf(lastRecord.next) !== -1
+    ? lastRecord.next
+    : unit.getNextType();
 const parse = (state = initState, action) => {
   switch (action.type) {
     case reducerType.NEXT_BLOCK:
