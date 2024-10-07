@@ -31,6 +31,7 @@ import {
 } from "../unit/const";
 import { visibilityChangeEvent, isFocus } from "../unit";
 import states from "../control/states";
+import Draggable from "../components/draggable";
 
 class App extends React.Component {
   constructor() {
@@ -197,6 +198,7 @@ class App extends React.Component {
           <Decorate />
 
           <div className={style.screen}>
+            <Draggable />
             <div className={style.panel}>
               {theme.isTheme ? (
                 <div>
