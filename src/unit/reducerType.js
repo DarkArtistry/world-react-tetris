@@ -1,3 +1,4 @@
+export const THEME = 'THEME';
 export const PAUSE = 'PAUSE';
 export const MUSIC = 'MUSIC';
 export const MATRIX = 'MATRIX';
@@ -20,4 +21,5 @@ export const KEY_ROTATE = 'KEY_ROTATE';
 export const KEY_RESET = 'KEY_RESET';
 export const KEY_MUSIC = 'KEY_MUSIC';
 export const KEY_PAUSE = 'KEY_PAUSE';
+export const KEY_THEME = 'KEY_THEME';
 export const FOCUS = 'FOCUS';

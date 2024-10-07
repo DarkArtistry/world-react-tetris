@@ -15,6 +15,7 @@ import reset from './reset';
 import drop from './drop';
 import keyboard from './keyboard';
 import focus from './focus';
+import theme from './theme';
 
 const rootReducer = combineReducers({
   pause,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   drop,
   keyboard,
   focus,
+  theme
 });
 
 export default rootReducer;
