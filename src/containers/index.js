@@ -105,28 +105,24 @@ class App extends React.Component {
 
   async sendPayment() {
     console.log("MiniKit.isInstalled() : ", MiniKit.isInstalled());
-    const res = await fetch("/api/initiate-payment", {
-      method: "POST",
-    });
-    const { id } = await res.json();
+    // const res = await fetch('/api/initiate-payment', {
+    // method: 'POST',
+    // });
+    // const { id } = await res.json();
+
+    const uuid = crypto.randomUUID().replace(/-/g, "");
 
     const payload = {
-      reference: id,
-      to: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // Test address
+      reference: uuid,
+      to: "xxxxxxxxxxxxx", // Test address
       tokens: [
         {
           symbol: Tokens.WLD,
           token_amount: tokenToDecimals(1, Tokens.WLD).toString(),
         },
-        {
-          symbol: Tokens.USDCE,
-          token_amount: tokenToDecimals(3, Tokens.USDCE).toString(),
-        },
       ],
       description: "Test example payment for minikit",
     };
-
-    MiniKit.commands.pay(payload);
 
     if (MiniKit.isInstalled()) {
       MiniKit.commands.pay(payload);

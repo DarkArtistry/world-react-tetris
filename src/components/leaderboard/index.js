@@ -19,7 +19,7 @@ class Leaderboard extends Component {
     this.state = {
       score: 0,
       leaderboard: [],
-      loading: false,
+      loading: true,
     };
   }
   componentWillMount() {
@@ -40,7 +40,7 @@ class Leaderboard extends Component {
         id: doc.id,
       }));
 
-      this.setState({ leaderboard });
+      this.setState({ leaderboard, loading: false });
     });
   };
 
@@ -62,7 +62,7 @@ class Leaderboard extends Component {
   };
 
   render() {
-    const { leaderboard } = this.state;
+    const { leaderboard, loading } = this.state;
     const { cur, pause, points, pointsSubmitted } = this.props;
 
     if (!cur && !pause)
@@ -99,7 +99,7 @@ class Leaderboard extends Component {
                       style={{ textAlign: "center", padding: "24px" }}
                       colSpan={2}
                     >
-                      No Data Found.
+                      {loading ? "Loading..." : "No Data Found"}
                     </td>
                   </tr>
                 )}
