@@ -1,4 +1,4 @@
-import * as reducerType from '../unit/reducerType';
+import * as reducerType from "../unit/reducerType";
 
 function drop(data) {
   return {
@@ -56,6 +56,13 @@ function pause(data) {
   };
 }
 
+function theme(data) {
+  return {
+    type: reducerType.KEY_THEME,
+    data,
+  };
+}
+
 export default {
   drop,
   down,
@@ -65,4 +72,5 @@ export default {
   reset,
   music,
   pause,
+  theme,
 };

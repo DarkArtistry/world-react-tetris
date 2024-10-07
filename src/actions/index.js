@@ -94,6 +94,13 @@ function pause(data) {
   };
 }
 
+function theme(data) {
+  return {
+    type: reducerType.THEME,
+    data,
+  };
+}
+
 function music(data) {
   return {
     type: reducerType.MUSIC,
@@ -125,4 +132,5 @@ export default {
   keyboard,
   music,
   focus,
+  theme,
 };
