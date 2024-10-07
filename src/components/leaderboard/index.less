@@ -18,17 +18,29 @@
 .leaderboardTable {
   width: 100%;
   border-collapse: collapse;
+  border: 1px solid black;
   td {
-    padding: 2px 4px;
-    border: 1px solid black;
+    padding: 4px 6px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     font-size: 16px;
   }
   th {
+    text-align: center;
     font-size: 12px;
     text-transform: uppercase;
-    padding: 2px 4px;
-    border: 1px solid black;
+    padding: 4px 6px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     font-weight: 700;
+  }
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+  th:last-child,
+  td:last-child {
+    text-align: right;
   }
 }
 

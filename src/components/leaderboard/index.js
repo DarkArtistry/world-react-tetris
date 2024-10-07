@@ -10,6 +10,8 @@ import {
   query,
 } from "firebase/firestore";
 import * as style from "./index.less";
+import actions from "../../actions";
+import store from "../../store";
 
 class Leaderboard extends Component {
   constructor(props) {
@@ -53,7 +55,7 @@ class Leaderboard extends Component {
           name,
           points,
         });
-
+        store.dispatch(actions.pointsSubmitted(true));
         this.fetchLeaderboard();
       }
     } catch (error) {}
@@ -61,16 +63,18 @@ class Leaderboard extends Component {
 
   render() {
     const { leaderboard } = this.state;
-    const { cur, pause, points } = this.props;
+    const { cur, pause, points, pointsSubmitted } = this.props;
 
     if (!cur && !pause)
       return (
         <div className={style.container}>
           <div className={style.wrapper}>
             <h4 className={style.pointsText}>Your Points: {points}</h4>
-            <button className={style.submitBtn} onClick={this.submitScore}>
-              Submit Score
-            </button>
+            {!pointsSubmitted && (
+              <button className={style.submitBtn} onClick={this.submitScore}>
+                Submit Score
+              </button>
+            )}
             <h4 className={style.leaderboardHeading}>Leaderboard</h4>
             <table className={style.leaderboardTable}>
               <thead>
@@ -114,6 +118,7 @@ const mapStateToProps = (state) => ({
   cur: state.get("cur"),
   theme: state.get("theme"),
   points: state.get("points"),
+  pointsSubmitted: state.get("pointsSubmitted"),
 });
 
 export default connect(mapStateToProps)(Leaderboard);

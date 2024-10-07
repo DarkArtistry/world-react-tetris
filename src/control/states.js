@@ -113,6 +113,7 @@ const states = {
 
   // 一个方块结束, 触发下一个
   nextAround: (matrix, stopDownTrigger) => {
+    store.dispatch(actions.pointsSubmitted(false));
     clearTimeout(states.fallInterval);
     store.dispatch(actions.lock(true));
     store.dispatch(actions.matrix(matrix));
