@@ -2,9 +2,7 @@ import { List } from 'immutable';
 import i18nJson from '../../i18n.json';
 
 export const blockShape = {
-  I: [
-    [1, 1, 1, 1],
-  ],
+  I: [[1, 1, 1, 1]],
   L: [
     [0, 0, 1],
     [1, 1, 1],
@@ -32,13 +30,21 @@ export const blockShape = {
 };
 
 export const origin = {
-  I: [[-1, 1], [1, -1]],
+  I: [
+    [-1, 1],
+    [1, -1],
+  ],
   L: [[0, 0]],
   J: [[0, 0]],
   Z: [[0, 0]],
   S: [[0, 0]],
   O: [[0, 0]],
-  T: [[0, 0], [1, 0], [-1, 1], [0, -1]],
+  T: [
+    [0, 0],
+    [1, 0],
+    [-1, 1],
+    [0, -1],
+  ],
 };
 
 export const blockType = Object.keys(blockShape);
@@ -63,7 +69,8 @@ export const clearPoints = [100, 300, 700, 1500];
 
 export const StorageKey = 'REACT_TETRIS';
 
-export const lastRecord = (() => { // 上一把的状态
+export const lastRecord = (() => {
+  // 上一把的状态
   let data = localStorage.getItem(StorageKey);
   if (!data) {
     return false;
@@ -86,14 +93,21 @@ export const lastRecord = (() => { // 上一把的状态
 export const maxPoint = 999999;
 
 export const transform = (function () {
-  const trans = ['transform', 'webkitTransform', 'msTransform', 'mozTransform', 'oTransform'];
+  const trans = [
+    'transform',
+    'webkitTransform',
+    'msTransform',
+    'mozTransform',
+    'oTransform',
+  ];
   const { body } = document;
   return trans.filter((e) => body.style[e] !== undefined)[0];
-}());
+})();
 
 export const eachLines = 20; // 每消除eachLines行, 增加速度
 
-export const getParam = (param) => { // 获取浏览器参数
+export const getParam = (param) => {
+  // 获取浏览器参数
   const r = new RegExp(`\\?(?:.+&)?${param}=(.*?)(?:&.*)?$`);
   const m = window.location.toString().match(r);
   return m ? decodeURI(m[1]) : '';
@@ -108,3 +122,9 @@ export const lan = (() => {
 document.title = i18nJson.data.title[lan];
 
 export const i18n = i18nJson.data;
+
+export const themeColors = [
+  { name: 'Navy Blue', code: '#000080' },
+  { name: 'Yellow', code: '#FFFF00' },
+  { name: 'Transparent', code: 'transparent' },
+];

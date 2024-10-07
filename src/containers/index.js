@@ -1,29 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import classnames from 'classnames';
-import propTypes from 'prop-types';
+import React from "react";
+import { connect } from "react-redux";
+import classnames from "classnames";
+import propTypes from "prop-types";
 import {
   MiniKit,
   tokenToDecimals,
   Tokens,
   PayCommandInput,
-} from '@worldcoin/minikit-js';
-import * as style from './index.less';
+} from "@worldcoin/minikit-js";
+import * as style from "./index.less";
 
-import Matrix from '../components/matrix';
-import Decorate from '../components/decorate';
-import Number from '../components/number';
-import Next from '../components/next';
-import Music from '../components/music';
-import Pause from '../components/pause';
-import Point from '../components/point';
-import Logo from '../components/logo';
-import Keyboard from '../components/keyboard';
+import Matrix from "../components/matrix";
+import Decorate from "../components/decorate";
+import Number from "../components/number";
+import Next from "../components/next";
+import Music from "../components/music";
+import Pause from "../components/pause";
+import Point from "../components/point";
+import Logo from "../components/logo";
+import Keyboard from "../components/keyboard";
 // import Guide from '../components/guide';
 
-import { transform, lastRecord, speeds, i18n, lan } from '../unit/const';
-import { visibilityChangeEvent, isFocus } from '../unit';
-import states from '../control/states';
+import {
+  transform,
+  lastRecord,
+  speeds,
+  i18n,
+  lan,
+  themeColors,
+} from "../unit/const";
+import { visibilityChangeEvent, isFocus } from "../unit";
+import states from "../control/states";
 
 class App extends React.Component {
   constructor() {
@@ -40,7 +47,7 @@ class App extends React.Component {
 
   componentWillMount() {
     MiniKit.install();
-    window.addEventListener('resize', this.resize.bind(this), true);
+    window.addEventListener("resize", this.resize.bind(this), true);
   }
 
   componentDidMount() {
@@ -94,15 +101,15 @@ class App extends React.Component {
   }
 
   async sendPayment() {
-    console.log('MiniKit.isInstalled() : ', MiniKit.isInstalled());
-    const res = await fetch('/api/initiate-payment', {
-      method: 'POST',
+    console.log("MiniKit.isInstalled() : ", MiniKit.isInstalled());
+    const res = await fetch("/api/initiate-payment", {
+      method: "POST",
     });
     const { id } = await res.json();
 
     const payload = {
       reference: id,
-      to: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', // Test address
+      to: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // Test address
       tokens: [
         {
           symbol: Tokens.WLD,
@@ -113,7 +120,7 @@ class App extends React.Component {
           token_amount: tokenToDecimals(3, Tokens.USDCE).toString(),
         },
       ],
-      description: 'Test example payment for minikit',
+      description: "Test example payment for minikit",
     };
 
     MiniKit.commands.pay(payload);
@@ -152,6 +159,7 @@ class App extends React.Component {
       css[transform] = `scale(${scale})`;
       return css;
     })();
+    const { theme } = this.props;
 
     return (
       <div className={style.app} style={size}>
@@ -163,7 +171,7 @@ class App extends React.Component {
         >
           <div className={style.buttonContainer}>
             <button
-              type='button'
+              type="button"
               className={classnames(style.button, {
                 [style.inverse]: this.state.isInverse,
               })}
@@ -173,43 +181,101 @@ class App extends React.Component {
             </button>
           </div>
           <Decorate />
+
           <div className={style.screen}>
             <div className={style.panel}>
-              <Matrix
-                matrix={this.props.matrix}
-                cur={this.props.cur}
-                reset={this.props.reset}
-              />
-              <Logo cur={!!this.props.cur} reset={this.props.reset} />
-              <div className={style.state}>
-                <Point
-                  cur={!!this.props.cur}
-                  point={this.props.points}
-                  max={this.props.max}
-                />
-                <p>{this.props.cur ? i18n.cleans[lan] : i18n.startLine[lan]}</p>
-                <Number
-                  number={
-                    this.props.cur
-                      ? this.props.clearLines
-                      : this.props.startLines
-                  }
-                />
-                <p>{i18n.level[lan]}</p>
-                <Number
-                  number={
-                    this.props.cur ? this.props.speedRun : this.props.speedStart
-                  }
-                  length={1}
-                />
-                <p>{i18n.next[lan]}</p>
-                <Next data={this.props.next} />
-                <div className={style.bottom}>
-                  <Music data={this.props.music} />
-                  <Pause data={this.props.pause} />
-                  <Number time />
+              {theme ? (
+                <div>
+                  <h3 className={style.textCenter}>{i18n.theme[lan]}</h3>
+                  <div className={style.themeForm}>
+                    <p>{i18n.backgroundColor[lan]}</p>
+                    <div className={style.radioGroup}>
+                      {themeColors.map((color, index) => (
+                        <div key={index}>
+                          <input
+                            type="radio"
+                            id={`background-color-${index}`}
+                            name="background-color"
+                            value={color.code}
+                          />
+                          <label htmlFor={`background-color-${index}`}>{color.name}</label>
+                        </div>
+                      ))}
+                    </div>
+                    <p>{i18n.buttonColor[lan]}</p>
+                    <div className={style.radioGroup}>
+                      {themeColors.map((color, index) => (
+                        <div key={index}>
+                          <input
+                            type="radio"
+                            id={`button-color-${index}`}
+                            name="button-color"
+                            value={color.code}
+                          />
+                          <label htmlFor={`button-color-${index}`}>{color.name}</label>
+                        </div>
+                      ))}
+                    </div>
+
+                    <p>{i18n.arrowPosition[lan]}</p>
+                    <div className={style.radioGroup}>
+                      {["left", "right"].map((pos, index) => (
+                        <div key={index}>
+                          <input
+                            type="radio"
+                            id={`arrow-pos-${pos}`}
+                            name="arrow-pos"
+                            value={pos}
+                          />
+                          <label htmlFor={`arrow-pos-${pos}`}>{pos}</label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <Matrix
+                    matrix={this.props.matrix}
+                    cur={this.props.cur}
+                    reset={this.props.reset}
+                  />
+                  <Logo cur={!!this.props.cur} reset={this.props.reset} />
+                  <div className={style.state}>
+                    <Point
+                      cur={!!this.props.cur}
+                      point={this.props.points}
+                      max={this.props.max}
+                    />
+                    <p>
+                      {this.props.cur ? i18n.cleans[lan] : i18n.startLine[lan]}
+                    </p>
+                    <Number
+                      number={
+                        this.props.cur
+                          ? this.props.clearLines
+                          : this.props.startLines
+                      }
+                    />
+                    <p>{i18n.level[lan]}</p>
+                    <Number
+                      number={
+                        this.props.cur
+                          ? this.props.speedRun
+                          : this.props.speedStart
+                      }
+                      length={1}
+                    />
+                    <p>{i18n.next[lan]}</p>
+                    <Next data={this.props.next} />
+                    <div className={style.bottom}>
+                      <Music data={this.props.music} />
+                      <Pause data={this.props.pause} />
+                      <Number time />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -240,21 +306,21 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  pause: state.get('pause'),
-  music: state.get('music'),
-  matrix: state.get('matrix'),
-  next: state.get('next'),
-  cur: state.get('cur'),
-  speedStart: state.get('speedStart'),
-  speedRun: state.get('speedRun'),
-  startLines: state.get('startLines'),
-  clearLines: state.get('clearLines'),
-  points: state.get('points'),
-  max: state.get('max'),
-  reset: state.get('reset'),
-  drop: state.get('drop'),
-  theme: state.get('theme'),
-  keyboard: state.get('keyboard'),
+  pause: state.get("pause"),
+  music: state.get("music"),
+  matrix: state.get("matrix"),
+  next: state.get("next"),
+  cur: state.get("cur"),
+  speedStart: state.get("speedStart"),
+  speedRun: state.get("speedRun"),
+  startLines: state.get("startLines"),
+  clearLines: state.get("clearLines"),
+  points: state.get("points"),
+  max: state.get("max"),
+  reset: state.get("reset"),
+  drop: state.get("drop"),
+  theme: state.get("theme"),
+  keyboard: state.get("keyboard"),
 });
 
 export default connect(mapStateToProps)(App);
