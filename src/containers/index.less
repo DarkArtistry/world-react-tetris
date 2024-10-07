@@ -167,14 +167,21 @@ body {
   flex-direction: column;
   gap: 8px;
   .radioGroup {
+    & > div {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    flex-wrap: wrap;
     display: flex;
-    gap: 4px;
+    gap: 6px;
     margin-bottom: 12px;
     label {
       font-size: 16px;
       margin-left: 4px;
       margin-right: 12px;
       text-transform: capitalize;
+      white-space: nowrap;
     }
   }
 }

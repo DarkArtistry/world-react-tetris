@@ -198,7 +198,7 @@ class App extends React.Component {
           <Decorate />
 
           <div className={style.screen}>
-            <Draggable />
+            {!theme.isTheme && <Draggable />}
             <div className={style.panel}>
               {theme.isTheme ? (
                 <div>
