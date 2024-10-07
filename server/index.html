@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="renderer" content="webkit">
+  <head>
+    <meta name="renderer" content="webkit" />
     <meta name="description" content="Game of Tetris" />
-    <meta name="keywords" content="俄罗斯方块,Tetris,React,Redux,Immuatble,JavaScript">
-    <meta name="format-detection" content="telephone=no"/>
-    <script>;(function(){var w=parseInt(window.screen.width),s=w/640,u=navigator.userAgent.toLowerCase(),m='<meta name="viewport" content="width=640,';if(/android (\d+\.\d+)/.test(u)){if(parseFloat(RegExp.$1)>2.3)m+='minimum-scale='+s+',maximum-scale='+s+',';}else{m+='user-scalable=no,';}m+='target-densitydpi=device-dpi">';document.write(m);}());</script>
-    <meta charset="UTF-8">
+    <meta
+      name="keywords"
+      content="俄罗斯方块,Tetris,React,Redux,Immuatble,JavaScript"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <script>
+      (function () {
+        var w = parseInt(window.screen.width),
+          s = w / 640,
+          u = navigator.userAgent.toLowerCase(),
+          m = '<meta name="viewport" content="width=640,';
+        if (/android (\d+\.\d+)/.test(u)) {
+          if (parseFloat(RegExp.$1) > 2.3)
+            m += "minimum-scale=" + s + ",maximum-scale=" + s + ",";
+        } else {
+          m += "user-scalable=no,";
+        }
+        m += 'target-densitydpi=device-dpi">';
+        document.write(m);
+      })();
+    </script>
+    <meta charset="UTF-8" />
     <title>Tetris</title>
     <link href="./loader.css" rel="stylesheet" />
-    <link href="./css.css" rel="stylesheet">
-</head>
-<body>
+    <link href="./css.css" rel="stylesheet" />
+  </head>
+  <body>
     <div id="root">
-        <div class="load">
-            <div class="loader">Loading</div>
-        </div>
+      <div class="load">
+        <div class="loader">Loading</div>
+      </div>
     </div>
     <script src="app.js"></script>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyCMHyzu8Jvjjl1-nlAHOXghGIVmwfqK6wQ",
-          authDomain: "tetris-58968.firebaseapp.com",
-          projectId: "tetris-58968",
-          storageBucket: "tetris-58968.appspot.com",
-          messagingSenderId: "216467645324",
-          appId: "1:216467645324:web:01186051568b8419056ca9",
-          measurementId: "G-8XVBRRRWYJ"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
-</body>
+  </body>
 </html>
