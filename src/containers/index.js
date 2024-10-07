@@ -32,6 +32,7 @@ import {
 import { visibilityChangeEvent, isFocus } from "../unit";
 import states from "../control/states";
 import Draggable from "../components/draggable";
+import Leaderboard from "../components/leaderboard";
 
 class App extends React.Component {
   constructor() {
@@ -171,7 +172,7 @@ class App extends React.Component {
       css[transform] = `scale(${scale})`;
       return css;
     })();
-    const { theme } = this.props;
+    const { theme, pause, cur } = this.props;
 
     return (
       <div
@@ -198,7 +199,7 @@ class App extends React.Component {
           <Decorate />
 
           <div className={style.screen}>
-            {!theme.isTheme && <Draggable />}
+            {!theme.isTheme && !pause && cur && <Draggable />}
             <div className={style.panel}>
               {theme.isTheme ? (
                 <div>
@@ -261,6 +262,7 @@ class App extends React.Component {
                 </div>
               ) : (
                 <div>
+                  {/* {!cur && !pause && <Leaderboard />} */}
                   <Matrix
                     matrix={this.props.matrix}
                     cur={this.props.cur}
@@ -347,6 +349,7 @@ const mapStateToProps = (state) => ({
   drop: state.get("drop"),
   theme: state.get("theme"),
   keyboard: state.get("keyboard"),
+  lock: state.get("lock"),
 });
 
 export default connect(mapStateToProps)(App);
