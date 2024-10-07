@@ -233,6 +233,15 @@ const states = {
   theme: (isTheme) => {
     store.dispatch(actions.theme(isTheme));
   },
+  backgroundColor: (color) => {
+    store.dispatch(actions.backgroundColor(color));
+  },
+  buttonColor: (color) => {
+    store.dispatch(actions.buttonColor(color));
+  },
+  arrowPosition: (position) => {
+    store.dispatch(actions.arrowPosition(position));
+  },
 };
 
 export default states;

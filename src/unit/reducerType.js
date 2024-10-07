@@ -23,3 +23,7 @@ export const KEY_MUSIC = 'KEY_MUSIC';
 export const KEY_PAUSE = 'KEY_PAUSE';
 export const KEY_THEME = 'KEY_THEME';
 export const FOCUS = 'FOCUS';
+export const BACKGROUND_COLOR = 'BACKGROUND_COLOR';
+export const BUTTON_COLOR = 'BUTTON_COLOR';
+export const ARROW_POSITION = 'ARROW_POSITION';
+

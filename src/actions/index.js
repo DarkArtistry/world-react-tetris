@@ -1,7 +1,7 @@
-import { getNextType } from '../unit';
-import * as reducerType from '../unit/reducerType';
-import Block from '../unit/block';
-import keyboard from './keyboard';
+import { getNextType } from "../unit";
+import * as reducerType from "../unit/reducerType";
+import Block from "../unit/block";
+import keyboard from "./keyboard";
 
 function nextBlock(next = getNextType()) {
   return {
@@ -115,6 +115,27 @@ function focus(data) {
   };
 }
 
+function backgroundColor(data) {
+  return {
+    type: reducerType.BACKGROUND_COLOR,
+    data,
+  };
+}
+
+function buttonColor(data) {
+  return {
+    type: reducerType.BUTTON_COLOR,
+    data,
+  };
+}
+
+function arrowPosition(data) {
+  return {
+    type: reducerType.ARROW_POSITION,
+    data,
+  };
+}
+
 export default {
   nextBlock,
   moveBlock,
@@ -133,4 +154,7 @@ export default {
   music,
   focus,
   theme,
+  backgroundColor,
+  buttonColor,
+  arrowPosition,
 };

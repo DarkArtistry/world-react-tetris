@@ -12,7 +12,7 @@ const down = (store) => {
       if (state.get("lock")) {
         return;
       }
-      const isTheme = state.get("theme");
+      const { isTheme } = state.get("theme");
       states.theme(!isTheme);
     },
   });
