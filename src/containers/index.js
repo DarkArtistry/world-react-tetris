@@ -33,6 +33,7 @@ import { visibilityChangeEvent, isFocus } from "../unit";
 import states from "../control/states";
 import Draggable from "../components/draggable";
 import Leaderboard from "../components/leaderboard";
+import lightenColor from "../utils/lightenColor";
 
 class App extends React.Component {
   constructor() {
@@ -198,7 +199,10 @@ class App extends React.Component {
           </div>
           <Decorate />
 
-          <div className={style.screen}>
+          <div
+            className={style.screen}
+            style={{ borderColor: lightenColor(theme.backgroundColor) }}
+          >
             {!theme.isTheme && !pause && cur && <Draggable />}
             <div className={style.panel}>
               {theme.isTheme ? (
