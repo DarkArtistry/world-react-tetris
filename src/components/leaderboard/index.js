@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { database } from "../../firebase";
+import { connect } from "react-redux";
+import Immutable from "immutable";
 
 class Leaderboard extends Component {
   constructor(props) {
@@ -49,43 +51,65 @@ class Leaderboard extends Component {
     this.fetchLeaderboard(); // Fetch leaderboard when game ends
   };
 
+  shouldComponentUpdate({ cur, pause, theme }) {
+    return (
+      !Immutable.is(cur, this.props.cur) ||
+      !Immutable.is(pause, this.props.pause) ||
+      !Immutable.is(theme, this.props.theme) // Check for theme changes
+    );
+  }
+
   render() {
     const { score, leaderboard, loading } = this.state;
+    const { cur, pause } = this.props;
 
-    return (
-      <div
-        style={{
-          position: "absolute",
-          top: "0px",
-          left: "0px",
-          padding: "12px",
-          width: "65%",
-          height: "100%",
-          zIndex: 1,
-        }}
-      >
+    if (!cur && !pause)
+      return (
         <div
-          style={{ backgroundColor: "#9ead86", width: "100%", height: "100%" }}
+          style={{
+            position: "absolute",
+            top: "0px",
+            left: "0px",
+            padding: "12px",
+            width: "65%",
+            height: "100%",
+            zIndex: 1,
+          }}
         >
-          <h3>Your Score: {score}</h3>
-          <button onClick={this.submitScore}>Submit Score</button>
-          <h4>Leaderboard</h4>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <ul>
-              {leaderboard?.map((entry, index) => (
-                <li key={index}>
-                  {entry?.name}: {entry?.score}
-                </li>
-              ))}
-            </ul>
-          )}
-          <button>Close</button>
+          <div
+            style={{
+              backgroundColor: "#9ead86",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <h3>Your Score: {score}</h3>
+            <button onClick={this.submitScore}>Submit Score</button>
+            <h4>Leaderboard</h4>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <ul>
+                {leaderboard?.map((entry, index) => (
+                  <li key={index}>
+                    {entry?.name}: {entry?.score}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button>Close</button>
+          </div>
         </div>
-      </div>
-    );
+      );
+
+    return null;
   }
 }
 
-export default Leaderboard;
+const mapStateToProps = (state) => ({
+  pause: state.get("pause"),
+  cur: state.get("cur"),
+  theme: state.get("theme"),
+});
+
+export default connect(mapStateToProps)(Leaderboard);

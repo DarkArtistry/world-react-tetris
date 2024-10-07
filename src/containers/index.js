@@ -266,7 +266,7 @@ class App extends React.Component {
                 </div>
               ) : (
                 <div>
-                  {/* {!cur && !pause && <Leaderboard />} */}
+                  <Leaderboard />
                   <Matrix
                     matrix={this.props.matrix}
                     cur={this.props.cur}
