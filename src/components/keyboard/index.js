@@ -7,8 +7,9 @@ import Button from "./button";
 import store from "../../store";
 import todo from "../../control/todo";
 import { i18n, lan } from "../../unit/const";
+import { connect } from "react-redux";
 
-export default class Keyboard extends React.Component {
+class Keyboard extends React.Component {
   componentDidMount() {
     const touchEventCatch = {}; // 对于手机操作, 触发了touchstart, 将作出记录, 不再触发后面的mouse事件
 
@@ -103,15 +104,43 @@ export default class Keyboard extends React.Component {
     });
   }
 
-  shouldComponentUpdate({ keyboard, filling }) {
+  shouldComponentUpdate({ keyboard, filling, theme }) {
     return (
       !Immutable.is(keyboard, this.props.keyboard) ||
-      filling !== this.props.filling
+      filling !== this.props.filling ||
+      !Immutable.is(theme, this.props.theme) // Check for theme changes
     );
   }
 
   render() {
-    const { keyboard } = this.props;
+    const { keyboard, theme } = this.props;
+
+    const leftPositions = {
+      rotate: { top: 0, left: 374 },
+      down: { top: 180, left: 374 },
+      left: { top: 90, left: 284 },
+      right: { top: 90, left: 464 },
+      drop: { top: 100, left: 52 },
+      reset: { top: 0, left: 196 },
+      sound: { top: 0, left: 106 },
+      pause: { top: 0, left: 16 },
+      theme: { top: 0, left: 286 },
+    };
+
+    const rightPositions = {
+      rotate: { top: 0, left: 110 },
+      down: { top: 180, left: 110 },
+      left: { top: 90, left: 24 },
+      right: { top: 90, left: 200 },
+      drop: { top: 100, left: 362 },
+      reset: { top: 0, left: 410 },
+      sound: { top: 0, left: 320 },
+      pause: { top: 0, left: 230 },
+      theme: { top: 0, left: 500 },
+    };
+
+    const positions =
+      theme.arrowPosition === "left" ? leftPositions : rightPositions;
 
     return (
       <div
@@ -126,23 +155,26 @@ export default class Keyboard extends React.Component {
         }}
       >
         <Button
+          backgroundColor={theme.buttonColor}
           color="grey"
           size="s1"
-          top={0}
-          left={374}
+          top={positions.rotate.top}
+          left={positions.rotate.left}
           label={i18n.rotation[lan]}
           arrow="translate(0, 63px)"
-          position
+          position={theme.arrowPosition === "left"}
+          positionRight={theme.arrowPosition === "right"}
           active={keyboard.get("rotate")}
           ref={(c) => {
             this.dom_rotate = c;
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="grey"
           size="s1"
-          top={180}
-          left={374}
+          top={positions.down.top}
+          left={positions.down.left}
           label={i18n.down[lan]}
           arrow="translate(0,-71px) rotate(180deg)"
           active={keyboard.get("down")}
@@ -151,10 +183,11 @@ export default class Keyboard extends React.Component {
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="grey"
           size="s1"
-          top={90}
-          left={284}
+          top={positions.left.top}
+          left={positions.left.left}
           label={i18n.left[lan]}
           arrow="translate(60px, -12px) rotate(270deg)"
           active={keyboard.get("left")}
@@ -163,10 +196,11 @@ export default class Keyboard extends React.Component {
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="grey"
           size="s1"
-          top={90}
-          left={464}
+          top={positions.right.top}
+          left={positions.right.left}
           label={i18n.right[lan]}
           arrow="translate(-60px, -12px) rotate(90deg)"
           active={keyboard.get("right")}
@@ -175,10 +209,11 @@ export default class Keyboard extends React.Component {
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="grey"
           size="s0"
-          top={100}
-          left={52}
+          top={positions.drop.top}
+          left={positions.drop.left}
           label={`${i18n.drop[lan]} (SPACE)`}
           active={keyboard.get("drop")}
           ref={(c) => {
@@ -186,10 +221,11 @@ export default class Keyboard extends React.Component {
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="red"
           size="s2"
-          top={0}
-          left={196}
+          top={positions.reset.top}
+          left={positions.reset.left}
           label={`${i18n.reset[lan]}(R)`}
           active={keyboard.get("reset")}
           ref={(c) => {
@@ -197,10 +233,11 @@ export default class Keyboard extends React.Component {
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="lightgrey"
           size="s2"
-          top={0}
-          left={106}
+          top={positions.sound.top}
+          left={positions.sound.left}
           label={`${i18n.sound[lan]}(S)`}
           active={keyboard.get("music")}
           ref={(c) => {
@@ -208,10 +245,11 @@ export default class Keyboard extends React.Component {
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="lightgrey"
           size="s2"
-          top={0}
-          left={16}
+          top={positions.pause.top}
+          left={positions.pause.left}
           label={`${i18n.pause[lan]}(P)`}
           active={keyboard.get("pause")}
           ref={(c) => {
@@ -219,10 +257,11 @@ export default class Keyboard extends React.Component {
           }}
         />
         <Button
+          backgroundColor={theme.buttonColor}
           color="lightgrey"
           size="s2"
-          top={0}
-          left={286}
+          top={positions.theme.top}
+          left={positions.theme.left}
           label={`Theme(T)`}
           active={keyboard.get("theme")}
           ref={(c) => {
@@ -238,3 +277,9 @@ Keyboard.propTypes = {
   filling: propTypes.number.isRequired,
   keyboard: propTypes.object.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  theme: state.get("theme"),
+});
+
+export default connect(mapStateToProps)(Keyboard);

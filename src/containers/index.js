@@ -136,6 +136,17 @@ class App extends React.Component {
       h: document.documentElement.clientHeight,
     });
   }
+  handleBackgroundColorChange = (event) => {
+    states.backgroundColor(event.target.value);
+  };
+
+  handleButtonColorChange = (event) => {
+    states.buttonColor(event.target.value);
+  };
+
+  handleArrowPositionChange = (event) => {
+    states.arrowPosition(event.target.value);
+  };
 
   render() {
     let filling = 0;
@@ -162,7 +173,10 @@ class App extends React.Component {
     const { theme } = this.props;
 
     return (
-      <div className={style.app} style={size}>
+      <div
+        className={style.app}
+        style={{ ...size, backgroundColor: theme.backgroundColor }}
+      >
         <div
           className={classnames({
             [style.rect]: true,
@@ -184,7 +198,7 @@ class App extends React.Component {
 
           <div className={style.screen}>
             <div className={style.panel}>
-              {theme ? (
+              {theme.isTheme ? (
                 <div>
                   <h3 className={style.textCenter}>{i18n.theme[lan]}</h3>
                   <div className={style.themeForm}>
@@ -197,8 +211,12 @@ class App extends React.Component {
                             id={`background-color-${index}`}
                             name="background-color"
                             value={color.code}
+                            checked={theme.backgroundColor === color.code}
+                            onChange={this.handleBackgroundColorChange}
                           />
-                          <label htmlFor={`background-color-${index}`}>{color.name}</label>
+                          <label htmlFor={`background-color-${index}`}>
+                            {color.name}
+                          </label>
                         </div>
                       ))}
                     </div>
@@ -211,8 +229,12 @@ class App extends React.Component {
                             id={`button-color-${index}`}
                             name="button-color"
                             value={color.code}
+                            checked={theme.buttonColor === color.code}
+                            onChange={this.handleButtonColorChange}
                           />
-                          <label htmlFor={`button-color-${index}`}>{color.name}</label>
+                          <label htmlFor={`button-color-${index}`}>
+                            {color.name}
+                          </label>
                         </div>
                       ))}
                     </div>
@@ -226,6 +248,8 @@ class App extends React.Component {
                             id={`arrow-pos-${pos}`}
                             name="arrow-pos"
                             value={pos}
+                            checked={theme.arrowPosition === pos}
+                            onChange={this.handleArrowPositionChange}
                           />
                           <label htmlFor={`arrow-pos-${pos}`}>{pos}</label>
                         </div>
@@ -301,7 +325,7 @@ App.propTypes = {
   max: propTypes.number.isRequired,
   reset: propTypes.bool.isRequired,
   drop: propTypes.bool.isRequired,
-  theme: propTypes.bool.isRequired,
+  theme: propTypes.object.isRequired,
   keyboard: propTypes.object.isRequired,
 };
 
