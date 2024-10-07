@@ -17,22 +17,32 @@ class Draggable extends React.Component {
     };
   }
 
-  handleMouseDown = (e) => {
+  // Helper to get the coordinates from mouse or touch events
+  getEventCoordinates = (e) => {
+    if (e.touches && e.touches.length > 0) {
+      return { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY };
+    }
+    return { clientX: e.clientX, clientY: e.clientY };
+  };
+
+  handleStart = (e) => {
     e.preventDefault();
+    const { clientX, clientY } = this.getEventCoordinates(e);
     this.setState({
       isDragging: true,
-      startX: e.clientX,
-      startY: e.clientY,
-      dragDirection: null, // Reset the direction on mouse down
+      startX: clientX,
+      startY: clientY,
+      dragDirection: null, // Reset the direction on start
     });
   };
 
-  handleMouseMove = (e) => {
+  handleMove = (e) => {
     const { isDragging, startX, startY, dragDirection } = this.state;
     if (!isDragging) return;
 
-    const deltaX = e.clientX - startX;
-    const deltaY = e.clientY - startY;
+    const { clientX, clientY } = this.getEventCoordinates(e);
+    const deltaX = clientX - startX;
+    const deltaY = clientY - startY;
 
     // Determine the drag direction
     if (dragDirection === null) {
@@ -42,7 +52,7 @@ class Draggable extends React.Component {
       } else {
         // Set drag direction to vertical
         this.setState({ dragDirection: "vertical" });
-        if (e.clientY > this.state.startY) {
+        if (clientY > this.state.startY) {
           todo.down.down(store);
         }
       }
@@ -50,36 +60,38 @@ class Draggable extends React.Component {
 
     // Update starting positions for continuous drag detection
     this.setState({
-      endX: e.clientX,
-      endY: e.clientY,
+      endX: clientX,
+      endY: clientY,
     });
   };
 
-  handleMouseUp = () => {
-    const { dragDirection } = this.state;
+  handleEnd = () => {
+    const { dragDirection, endX, startX, endY, startY } = this.state;
+    this.handleMouseClick();
 
     if (dragDirection === "horizontal") {
-      // Call horizontal drag functions based on the last drag direction
-      if (this.state.endX > this.state.startX) {
+      if (endX > startX) {
         this.onDragRight();
       } else {
         this.onDragLeft();
       }
     } else if (dragDirection === "vertical") {
-      // Call vertical drag functions based on the last drag direction
-      if (this.state.endY > this.state.startY) {
+      if (endY > startY) {
         this.onDragDown();
       } else {
         this.onDragUp();
       }
     }
 
-    this.setState({ isDragging: false, dragDirection: null }); // Reset direction on mouse up
+    // Reset drag state
+    this.setState({ isDragging: false, dragDirection: null });
   };
 
   handleMouseClick = () => {
     const { startX, startY, endX, endY, dragDirection } = this.state;
+
     console.log(startX, startY, endX, endY, dragDirection);
+
     if (endX === 0 && endY === 0 && dragDirection === null) {
       this.onDragUp();
     }
@@ -131,21 +143,32 @@ class Draggable extends React.Component {
   };
 
   componentDidMount() {
-    document.addEventListener("mousemove", this.handleMouseMove);
-    document.addEventListener("mouseup", this.handleMouseUp);
+    // Mouse events
+    document.addEventListener("mousemove", this.handleMove);
+    document.addEventListener("mouseup", this.handleEnd);
+
+    // Touch events
+    document.addEventListener("touchmove", this.handleMove);
+    document.addEventListener("touchend", this.handleEnd);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousemove", this.handleMouseMove);
-    document.removeEventListener("mouseup", this.handleMouseUp);
+    // Mouse events
+    document.removeEventListener("mousemove", this.handleMove);
+    document.removeEventListener("mouseup", this.handleEnd);
+
+    // Touch events
+    document.removeEventListener("touchmove", this.handleMove);
+    document.removeEventListener("touchend", this.handleEnd);
   }
 
   render() {
     return (
       <div
         className={style.draggable}
-        onMouseDown={this.handleMouseDown}
-        onClick={this.handleMouseClick}
+        onMouseDown={this.handleStart} // Start drag on mouse down
+        onTouchStart={this.handleStart} // Start drag on touch start
+        // onClick={this.handleMouseClick}
       />
     );
   }
