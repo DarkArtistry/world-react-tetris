@@ -9,6 +9,8 @@ import todo from "../../control/todo";
 import { i18n, lan } from "../../unit/const";
 import { connect } from "react-redux";
 
+import KeyboardBackground from "../../resource/image/Worldcoin_transparent_background.png";
+
 class Keyboard extends React.Component {
   componentDidMount() {
     const touchEventCatch = {}; // 对于手机操作, 触发了touchstart, 将作出记录, 不再触发后面的mouse事件
@@ -147,8 +149,7 @@ class Keyboard extends React.Component {
         className={style.keyboard}
         style={{
           marginTop: 20 + this.props.filling,
-          backgroundImage:
-            'url("https://worldcoin.org/images/Worldcoin.org-Meta-1920x1080px@2x.jpg")',
+          backgroundImage: `url(${KeyboardBackground})`,
           backgroundSize: "contain",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
