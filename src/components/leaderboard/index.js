@@ -12,6 +12,7 @@ import {
 import * as style from "./index.less";
 import actions from "../../actions";
 import store from "../../store";
+import { MiniKit, tokenToDecimals, Tokens } from "@worldcoin/minikit-js";
 
 class Leaderboard extends Component {
   constructor(props) {
@@ -28,25 +29,56 @@ class Leaderboard extends Component {
 
   // Fetch leaderboard data from Firebase
   fetchLeaderboard = async () => {
-    const q = query(
-      collection(db, "leaderboard"),
-      orderBy("points", "desc"),
-      limit(10)
-    );
+    try {
+      const q = query(
+        collection(db, "leaderboard"),
+        orderBy("points", "desc"),
+        limit(10)
+      );
 
-    await getDocs(q).then((querySnapshot) => {
-      const leaderboard = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
+      await getDocs(q).then((querySnapshot) => {
+        const leaderboard = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
 
-      this.setState({ leaderboard, loading: false });
-    });
+        this.setState({ leaderboard, loading: false });
+      });
+    } catch (error) {
+      this.setState({ leaderboard: [], loading: false });
+    }
   };
+
+  async sendPayment() {
+    console.log("MiniKit.isInstalled() : ", MiniKit.isInstalled());
+    // const res = await fetch('/api/initiate-payment', {
+    // method: 'POST',
+    // });
+    // const { id } = await res.json();
+
+    const uuid = crypto.randomUUID().replace(/-/g, "");
+
+    const payload = {
+      reference: uuid,
+      to: "xxxxxxxxxxxxx", // Test address
+      tokens: [
+        {
+          symbol: Tokens.WLD,
+          token_amount: tokenToDecimals(1, Tokens.WLD).toString(),
+        },
+      ],
+      description: "Test example payment for minikit",
+    };
+
+    if (MiniKit.isInstalled()) {
+      MiniKit.commands.pay(payload);
+    }
+  }
 
   // Submit score to Firebase
   submitScore = async () => {
     try {
+      await this.sendPayment();
       const { points } = this.props;
       const name = prompt(`Enter your name to submit your score(${points}):`);
 
