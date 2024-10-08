@@ -12,5 +12,5 @@ const firebaseConfig = {
   measurementId: "G-8XVBRRRWYJ",
 };
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+initializeApp(firebaseConfig);
+export const db = getFirestore("tetris-leaderboard");
