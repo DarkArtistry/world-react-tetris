@@ -136,6 +136,13 @@ function arrowPosition(data) {
   };
 }
 
+function pointsSubmitted(data) {
+  return {
+    type: reducerType.POINTS_SUBMITTED,
+    data,
+  };
+}
+
 export default {
   nextBlock,
   moveBlock,
@@ -157,4 +164,5 @@ export default {
   backgroundColor,
   buttonColor,
   arrowPosition,
+  pointsSubmitted,
 };

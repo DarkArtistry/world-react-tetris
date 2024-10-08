@@ -1,11 +1,10 @@
 // firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCMHyzu8Jvjjl1-nlAHOXghGIVmwfqK6wQ",
   authDomain: "tetris-58968.firebaseapp.com",
-  databaseURL: "https://tetris-58968-default-rtdb.firebaseio.com",
   projectId: "tetris-58968",
   storageBucket: "tetris-58968.appspot.com",
   messagingSenderId: "216467645324",
@@ -14,4 +13,4 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const database = getDatabase(app);
+export const db = getFirestore(app);
