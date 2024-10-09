@@ -13,6 +13,7 @@ import * as style from "./index.less";
 import actions from "../../actions";
 import store from "../../store";
 import { MiniKit, tokenToDecimals, Tokens } from "@worldcoin/minikit-js";
+import Button from "../button";
 
 class Leaderboard extends Component {
   constructor(props) {
@@ -103,9 +104,9 @@ class Leaderboard extends Component {
           <div className={style.wrapper}>
             <h4 className={style.pointsText}>Your Points: {points}</h4>
             {!pointsSubmitted && (
-              <button className={style.submitBtn} onClick={this.submitScore}>
-                Submit Score
-              </button>
+              <div className={style.buttonContainer}>
+                <Button onClick={this.submitScore}>Submit Score</Button>
+              </div>
             )}
             <h4 className={style.leaderboardHeading}>Leaderboard</h4>
             <table className={style.leaderboardTable}>

@@ -34,6 +34,7 @@ import states from "../control/states";
 import Draggable from "../components/draggable";
 import Leaderboard from "../components/leaderboard";
 import lightenColor from "../utils/lightenColor";
+import Button from "../components/button";
 
 class App extends React.Component {
   constructor() {
@@ -41,10 +42,8 @@ class App extends React.Component {
     this.state = {
       w: document.documentElement.clientWidth,
       h: document.documentElement.clientHeight,
-      isInverse: false, // Add this line
     };
     this.handleButtonClick = this.handleButtonClick.bind(this); // Add this line
-    this.handleButtonState = this.handleButtonState.bind(this); // Add this line
     this.sendPayment = this.sendPayment.bind(this); // Add this line
   }
 
@@ -86,20 +85,7 @@ class App extends React.Component {
     }
   }
 
-  handleButtonState() {
-    this.setState({
-      ...this.state,
-      isInverse: !this.state.isInverse,
-    });
-  }
-
   handleButtonClick() {
-    this.handleButtonState();
-    const that = this;
-    setTimeout(() => {
-      that.handleButtonState();
-    }, 1000);
-
     this.sendPayment();
   }
 
@@ -183,15 +169,7 @@ class App extends React.Component {
           })}
         >
           <div className={style.buttonContainer}>
-            <button
-              type="button"
-              className={classnames(style.button, {
-                [style.inverse]: this.state.isInverse,
-              })}
-              onClick={this.handleButtonClick}
-            >
-              Donate!
-            </button>
+            <Button onClick={this.handleButtonClick}>Donate!</Button>
           </div>
           <Decorate />
 
