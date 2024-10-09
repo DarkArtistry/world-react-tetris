@@ -4,22 +4,29 @@ import { connect } from "react-redux";
 import {
   addDoc,
   collection,
+  getCountFromServer,
   getDocs,
   limit,
   orderBy,
   query,
+  startAfter,
 } from "firebase/firestore";
 import * as style from "./index.less";
 import actions from "../../actions";
 import store from "../../store";
 import { MiniKit, tokenToDecimals, Tokens } from "@worldcoin/minikit-js";
 import Button from "../button";
+import Pagination from "./pagination";
 
 class Leaderboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       score: 0,
+      currentPage: 1,
+      totalCount: 0,
+      totalPages: 0,
+      pageSize: 10,
       leaderboard: [],
       loading: true,
     };
@@ -28,25 +35,54 @@ class Leaderboard extends Component {
     this.fetchLeaderboard();
   }
 
+  handlePageChange = (currentPage) => {
+    this.setState({ currentPage });
+  };
+
   // Fetch leaderboard data from Firebase
-  fetchLeaderboard = async () => {
+  fetchLeaderboard = async (last) => {
     try {
-      const q = query(
-        collection(db, "leaderboard"),
-        orderBy("points", "desc"),
-        limit(10)
-      );
+      let q;
+      if (last) {
+        q = query(
+          collection(db, "leaderboard"),
+          orderBy("points", "desc"),
+          limit(100),
+          startAfter(last)
+        );
+      } else {
+        q = query(
+          collection(db, "leaderboard"),
+          orderBy("points", "desc"),
+          limit(100)
+        );
+      }
+
+      const snapshot = await getCountFromServer(collection(db, "leaderboard"));
+      const totalCount = snapshot.data().count;
+      this.setState({
+        totalCount,
+        totalPages: Math.ceil(totalCount / this.state.pageSize),
+      });
 
       await getDocs(q).then((querySnapshot) => {
-        const leaderboard = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
+        const leaderboard = [
+          ...this.state.leaderboard,
+          ...querySnapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          })),
+        ];
 
         this.setState({ leaderboard, loading: false });
+
+        if (totalCount > leaderboard.length) {
+          const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+          this.fetchLeaderboard(lastVisible);
+        }
       });
     } catch (error) {
-      this.setState({ leaderboard: [], loading: false });
+      this.setState({ loading: false });
     }
   };
 
@@ -95,9 +131,12 @@ class Leaderboard extends Component {
   };
 
   render() {
-    const { leaderboard, loading } = this.state;
-    const { cur, pause, points, pointsSubmitted } = this.props;
+    const { leaderboard, loading, totalPages, currentPage, pageSize } =
+      this.state;
 
+    const pageStartIndex = (currentPage - 1) * pageSize;
+
+    const { cur, pause, points, pointsSubmitted } = this.props;
     if (!cur && !pause)
       return (
         <div className={style.container}>
@@ -118,14 +157,16 @@ class Leaderboard extends Component {
               </thead>
               <tbody>
                 {leaderboard?.length > 0 ? (
-                  leaderboard?.map((entry, index) => (
-                    <tr key={index}>
-                      <td>
-                        {index + 1}. {entry?.name}
-                      </td>
-                      <td>{entry?.points}</td>
-                    </tr>
-                  ))
+                  leaderboard
+                    ?.slice(pageStartIndex, pageStartIndex + pageSize)
+                    ?.map((entry, index) => (
+                      <tr key={index}>
+                        <td>
+                          {pageStartIndex + (index + 1)}. {entry?.name}
+                        </td>
+                        <td>{entry?.points}</td>
+                      </tr>
+                    ))
                 ) : (
                   <tr>
                     <td
@@ -138,6 +179,11 @@ class Leaderboard extends Component {
                 )}
               </tbody>
             </table>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={this.handlePageChange}
+            />
           </div>
         </div>
       );
