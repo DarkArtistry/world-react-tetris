@@ -1,23 +1,24 @@
 const path = require("path");
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const { version } = require('./package.json');
+const { version } = require("./package.json");
+const Dotenv = require("dotenv-webpack");
 // const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 // 程序入口
-const entry = path.join(__dirname, '/src/index.js');
+const entry = path.join(__dirname, "/src/index.js");
 
 // 输出文件
 const output = {
-  filename: 'page/[name]/index.js',
-  chunkFilename: 'chunk/[name].[chunkhash:5].chunk.js',
+  filename: "page/[name]/index.js",
+  chunkFilename: "chunk/[name].[chunkhash:5].chunk.js",
 };
 
 // 生成source-map追踪js错误
-const devtool = 'source-map';
+const devtool = "source-map";
 
 // loader
 const loaders = [
@@ -25,12 +26,15 @@ const loaders = [
     test: /\.(?:js|mjs|cjs|jsx)$/,
     exclude: /node_modules/,
     use: {
-      loader: 'babel-loader',
+      loader: "babel-loader",
       options: {
         presets: [
-          ['@babel/preset-env', {
-            targets: 'defaults',
-          }],
+          [
+            "@babel/preset-env",
+            {
+              targets: "defaults",
+            },
+          ],
         ],
       },
     },
@@ -39,7 +43,7 @@ const loaders = [
     test: /\.(png|jpg|gif)$/i,
     use: [
       {
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 8192,
         },
@@ -54,7 +58,7 @@ const loaders = [
         loader: "css-loader",
         options: {
           modules: {
-            localIdentName: '[hash:base64:5]',
+            localIdentName: "[hash:base64:5]",
           },
         },
       },
@@ -70,10 +74,11 @@ const loaders = [
 
 // dev plugin
 const devPlugins = [
+  new Dotenv(),
   new CopyWebpackPlugin({
     patterns: [
-      { from: './src/resource/music/music.mp3' },
-      { from: './src/resource/css/loader.css' },
+      { from: "./src/resource/music/music.mp3" },
+      { from: "./src/resource/css/loader.css" },
     ],
   }),
   // 允许错误不打断程序, 仅开发模式需要
@@ -81,11 +86,11 @@ const devPlugins = [
   // 打开浏览器页面
   // css打包
   new MiniCssExtractPlugin({
-    filename: 'css/[name].css',
+    filename: "css/[name].css",
   }),
   // HTML 模板
   new HtmlWebpackPlugin({
-    template: path.join(__dirname, '/server/index.tmpl.html'),
+    template: path.join(__dirname, "/server/index.tmpl.html"),
   }),
   // Eslint
   // intentionally disabled this due to bundle of errors because of strict configurations
@@ -94,24 +99,25 @@ const devPlugins = [
 
 // production plugin
 const productionPlugins = [
+  new Dotenv(),
   // 定义生产环境
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': '"production"',
+    "process.env.NODE_ENV": '"production"',
   }),
   // 复制
   new CopyWebpackPlugin({
     patterns: [
-      { from: './src/resource/music/music.mp3' },
-      { from: './src/resource/css/loader.css' },
+      { from: "./src/resource/music/music.mp3" },
+      { from: "./src/resource/css/loader.css" },
     ],
   }),
   // HTML 模板
   new HtmlWebpackPlugin({
-    template: path.join(__dirname, '/server/index.tmpl.html'),
+    template: path.join(__dirname, "/server/index.tmpl.html"),
   }),
   // css打包
   new MiniCssExtractPlugin({
-    filename: 'css/[name].css',
+    filename: "css/[name].css",
   }),
   // Eslint
   // intentionally disabled this due to bundle of errors because of strict configurations
@@ -122,10 +128,10 @@ const productionPlugins = [
 const devServer = {
   historyApiFallback: false,
   port: 8080, // defaults to "8080"
-  host: '0.0.0.0',
+  host: "0.0.0.0",
   open: true,
   static: {
-    directory: path.join(__dirname, 'server'),
+    directory: path.join(__dirname, "server"),
   },
 };
 
