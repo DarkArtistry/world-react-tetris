@@ -66,13 +66,17 @@ class Leaderboard extends Component {
       });
 
       await getDocs(q).then((querySnapshot) => {
-        const leaderboard = [
+        const allLeaderboard = [
           ...this.state.leaderboard,
           ...querySnapshot.docs.map((doc) => ({
             ...doc.data(),
             id: doc.id,
           })),
-        ];
+        ].sort((a, b) => b.points - a.points);
+
+        const leaderboard = Array.from(
+          new Map(allLeaderboard.map((item) => [item.id, item])).values()
+        );
 
         this.setState({ leaderboard, loading: false });
 
