@@ -162,9 +162,13 @@ class Leaderboard extends Component {
                     ?.map((entry, index) => (
                       <tr key={index}>
                         <td>
-                          {pageStartIndex + (index + 1)}. {entry?.name}
+                          <p>
+                            {pageStartIndex + (index + 1)}. {entry?.name}
+                          </p>
                         </td>
-                        <td>{entry?.points}</td>
+                        <td>
+                          <p>{entry?.points}</p>
+                        </td>
                       </tr>
                     ))
                 ) : (

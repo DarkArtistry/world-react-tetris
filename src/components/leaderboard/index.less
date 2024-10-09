@@ -37,17 +37,33 @@
   th:first-child,
   td:first-child {
     text-align: left;
+    max-width: 140px;
+
+    p {
+      white-space: nowrap;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
   th:last-child,
   td:last-child {
     text-align: right;
+    max-width: 60px;
+
+    p {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
 .leaderboardHeading {
   text-align: center;
-  margin-top: 16px;
-  margin-bottom: 8px;
+  margin-top: 12px;
+  margin-bottom: 6px;
 }
 
 .pointsText {
