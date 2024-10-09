@@ -30,7 +30,11 @@ class Pagination extends Component {
         </Button>
       );
       if (adjustedStartPage > 2) {
-        pages.push(<span key="start-ellipsis">...</span>);
+        pages.push(
+          <span key="start-ellipsis" style={{ margin: "4px" }}>
+            -
+          </span>
+        );
       }
     }
 
@@ -50,7 +54,11 @@ class Pagination extends Component {
     // Add the last page if it's not in the visible range
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) {
-        pages.push(<span key="end-ellipsis">...</span>);
+        pages.push(
+          <span key="end-ellipsis" style={{ margin: "4px" }}>
+            -
+          </span>
+        );
       }
       pages.push(
         <Button
