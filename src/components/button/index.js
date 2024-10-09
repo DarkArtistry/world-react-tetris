@@ -11,23 +11,20 @@ class Button extends Component {
   }
 
   handleClick = () => {
-    this.setState({ isInverse: true });
-    setTimeout(() => {
-      this.setState({ isInverse: false });
-    }, 1000);
     this.props.onClick();
   };
 
   render() {
     const { isInverse } = this.state;
-    const { children } = this.props;
+    const { children, isActive, disabled } = this.props;
 
     return (
       <button
         type="button"
         className={classNames(style.button, {
-          [style.inverse]: isInverse,
+          [style.inverse]: isInverse || isActive,
         })}
+        disabled={disabled}
         onClick={this.handleClick}
       >
         {children}
