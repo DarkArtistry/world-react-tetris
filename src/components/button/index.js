@@ -23,17 +23,15 @@ class Button extends Component {
     const { children } = this.props;
 
     return (
-      <div className={style.buttonContainer}>
-        <button
-          type="button"
-          className={classNames(style.button, {
-            [style.inverse]: isInverse,
-          })}
-          onClick={this.handleClick}
-        >
-          {children}
-        </button>
-      </div>
+      <button
+        type="button"
+        className={classNames(style.button, {
+          [style.inverse]: isInverse,
+        })}
+        onClick={this.handleClick}
+      >
+        {children}
+      </button>
     );
   }
 }
