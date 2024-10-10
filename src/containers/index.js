@@ -91,7 +91,7 @@ class App extends React.Component {
   }
 
   async sendPayment() {
-    console.log("MiniKit.isInstalled() : ", MiniKit.isInstalled());
+    console.log("MiniKit.isInstalled() 2: ", MiniKit.isInstalled());
     // const res = await fetch('/api/initiate-payment', {
     // method: 'POST',
     // });
@@ -171,8 +171,8 @@ class App extends React.Component {
         >
           <div className={style.buttonContainer}>
             <WhiteButton
-              onMouseDown={this.handleButtonClick}
               onTouchStart={(e) => {
+                console.log("event : ", e);
                 e.preventDefault();
                 this.handleButtonClick();
               }}
