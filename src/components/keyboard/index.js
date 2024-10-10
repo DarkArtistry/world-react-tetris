@@ -118,11 +118,11 @@ class Keyboard extends React.Component {
     const { keyboard, theme } = this.props;
 
     const leftPositions = {
-      rotate: { top: 0, left: 374 },
+      rotate: { top: 100, left: 52 },
       down: { top: 180, left: 374 },
       left: { top: 90, left: 284 },
       right: { top: 90, left: 464 },
-      drop: { top: 100, left: 52 },
+      drop: { top: 0, left: 374 },
       reset: { top: 0, left: 196 },
       sound: { top: 0, left: 106 },
       pause: { top: 0, left: 16 },
@@ -130,11 +130,11 @@ class Keyboard extends React.Component {
     };
 
     const rightPositions = {
-      rotate: { top: 0, left: 110 },
+      rotate: { top: 100, left: 362 },
       down: { top: 180, left: 110 },
-      left: { top: 90, left: 24 },
+      left: { top: 90, left: 20 },
       right: { top: 90, left: 200 },
-      drop: { top: 100, left: 362 },
+      drop: { top: 0, left: 110 },
       reset: { top: 0, left: 410 },
       sound: { top: 0, left: 320 },
       pause: { top: 0, left: 230 },
@@ -158,16 +158,28 @@ class Keyboard extends React.Component {
         <Button
           backgroundColor={theme.buttonColor}
           color="grey"
-          size="s1"
+          size="s0"
           top={positions.rotate.top}
           left={positions.rotate.left}
-          label={i18n.rotation[lan]}
-          arrow="translate(0, 63px)"
-          position={theme.arrowPosition === "left"}
-          positionRight={theme.arrowPosition === "right"}
+          label={`${i18n.rotation[lan]} (SPACE)`}
           active={keyboard.get("rotate")}
           ref={(c) => {
             this.dom_rotate = c;
+          }}
+        />
+        <Button
+          backgroundColor={theme.buttonColor}
+          color="grey"
+          size="s1"
+          arrow="translate(0, 63px)"
+          top={positions.drop.top}
+          left={positions.drop.left}
+          label={i18n.drop[lan]}
+          position={theme.arrowPosition === "left"}
+          positionRight={theme.arrowPosition === "right"}
+          active={keyboard.get("drop")}
+          ref={(c) => {
+            this.dom_space = c;
           }}
         />
         <Button
@@ -207,18 +219,6 @@ class Keyboard extends React.Component {
           active={keyboard.get("right")}
           ref={(c) => {
             this.dom_right = c;
-          }}
-        />
-        <Button
-          backgroundColor={theme.buttonColor}
-          color="grey"
-          size="s0"
-          top={positions.drop.top}
-          left={positions.drop.left}
-          label={`${i18n.drop[lan]} (SPACE)`}
-          active={keyboard.get("drop")}
-          ref={(c) => {
-            this.dom_space = c;
           }}
         />
         <Button
