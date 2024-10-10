@@ -91,7 +91,7 @@ class Draggable extends React.Component {
     const { endX, endY, dragDirection } = this.state;
 
     if (endX === 0 && endY === 0 && dragDirection === null) {
-      this.onDragUp();
+      this.onRotate();
     }
   };
 
@@ -120,9 +120,9 @@ class Draggable extends React.Component {
   };
 
   onDragUp = () => {
-    todo.rotate.down(store);
+    todo.up.down(store);
     setTimeout(() => {
-      todo.rotate.up(store);
+      todo.up.up(store);
       this.setState({
         endX: 0,
         endY: 0,
@@ -138,6 +138,18 @@ class Draggable extends React.Component {
       endY: 0,
       dragDirection: null,
     });
+  };
+
+  onRotate = () => {
+    todo.rotate.down(store);
+    setTimeout(() => {
+      todo.rotate.up(store);
+      this.setState({
+        endX: 0,
+        endY: 0,
+        dragDirection: null,
+      });
+    }, 100);
   };
 
   render() {
