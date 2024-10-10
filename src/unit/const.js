@@ -125,7 +125,7 @@ export const i18n = i18nJson.data;
 
 export const themeColors = [
   { name: "Transparent", code: "transparent" },
-  { name: "Navy Blue", code: "#000080" },
+  { name: "Navy Blue", code: "#005596" },
   { name: "Yellow", code: "#FFFF00" },
   { name: "Baby Blue", code: "#89CFF0" },
   { name: "Light Green", code: "#90EE90" },

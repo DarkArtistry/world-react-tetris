@@ -166,7 +166,7 @@ class Draggable extends React.Component {
     return (
       <div
         className={style.draggable}
-        onMouseDown={this.handleStart} // Start drag on mouse down
+        //onMouseDown={this.handleStart} // Start drag on mouse down
         onTouchStart={this.handleStart} // Start drag on touch start
         // onClick={this.handleMouseClick}
       />

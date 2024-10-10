@@ -35,6 +35,7 @@ import Draggable from "../components/draggable";
 import Leaderboard from "../components/leaderboard";
 import lightenColor from "../utils/lightenColor";
 import Button from "../components/button";
+import WhiteButton from "../components/whitebutton";
 
 class App extends React.Component {
   constructor() {
@@ -100,7 +101,7 @@ class App extends React.Component {
 
     const payload = {
       reference: uuid,
-      to: "xxxxxxxxxxxxx", // Test address
+      to: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // Test address
       tokens: [
         {
           symbol: Tokens.WLD,
@@ -169,7 +170,14 @@ class App extends React.Component {
           })}
         >
           <div className={style.buttonContainer}>
-            <Button onClick={this.handleButtonClick}>Donate!</Button>
+            <WhiteButton 
+              onMouseDown={this.handleButtonClick}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                this.handleButtonClick();
+              }}
+  
+            >Support Development by Donating 1 WLD</WhiteButton>
           </div>
           <Decorate />
 

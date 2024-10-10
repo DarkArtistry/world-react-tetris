@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="Game of Tetris" />
+  <meta name="keywords" content="俄罗斯方块,Tetris,React,Redux,Immuatble,JavaScript">
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link href="./loader.css" rel="stylesheet" />
+  <link href="css/main.css" rel="stylesheet">
+  <script>
+    ;
+    (function () {
+        function adjustViewport() {
+            var w = parseInt(window.screen.width),
+                s = w / 1024,
+                u = navigator.userAgent.toLowerCase(),
+                meta = document.createElement('meta');
+
+            meta.name = 'viewport';
+            
+            if (/android (\d+\.\d+)/.test(u)) {
+                if (parseFloat(RegExp.$1) > 2.3) {
+                meta.content = 'width=1024, minimum-scale=' + s + ', maximum-scale=' + s + ', user-scalable=no, target-densitydpi=device-dpi';
+                } else {
+                meta.content = 'width=1024, user-scalable=no, target-densitydpi=device-dpi';
+                }
+            } else {
+                meta.content = 'width=1024, user-scalable=no, target-densitydpi=device-dpi';
+            }
+
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }
+
+        window.addEventListener('resize', adjustViewport);
+        window.addEventListener('load', adjustViewport);
+    })();
+
+
+    //     (function() {
+    //     function adjustViewport() {
+    //         var metaViewport = document.querySelector('meta[name="viewport"]');
+    //         if (!metaViewport) {
+    //             metaViewport = document.createElement('meta');
+    //             metaViewport.name = "viewport";
+    //             document.head.appendChild(metaViewport);
+    //         }
+    //         var width = window.innerWidth;
+    //         var scale = width / 640; // Adjust 640 to your design width
+    //         metaViewport.content = `width=640, initial-scale=${scale}, maximum-scale=${scale}, user-scalable=no`;
+    //     }
+
+    //     window.addEventListener('resize', adjustViewport);
+    //     window.addEventListener('load', adjustViewport);
+    // })();
+
+  </script>
+  <meta charset="UTF-8">
+  <title>Tetris</title>
+  <script defer="defer" src="app-1.0.1.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    <div class="load">
+      <div class="loader">Loading</div>
+    </div>
+  </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+      // // The Firebase SDK is initialized and available here!
+      //
+      // firebase.auth().onAuthStateChanged(user => { });
+      // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+      // firebase.messaging().requestPermission().then(() => { });
+      // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+      //
+      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+      try {
+        let app = firebase.app();
+        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+        document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+      } catch (e) {
+        console.error(e);
+        document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+      }
+    });
+  </script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyCMHyzu8Jvjjl1-nlAHOXghGIVmwfqK6wQ",
+          authDomain: "tetris-58968.firebaseapp.com",
+          projectId: "tetris-58968",
+          storageBucket: "tetris-58968.appspot.com",
+          messagingSenderId: "216467645324",
+          appId: "1:216467645324:web:01186051568b8419056ca9",
+          measurementId: "G-8XVBRRRWYJ"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+</html>

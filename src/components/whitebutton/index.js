@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import * as style from "./index.less";
 
-class Button extends Component {
+class WhiteButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,4 +33,4 @@ class Button extends Component {
   }
 }
 
-export default Button;
+export default WhiteButton;

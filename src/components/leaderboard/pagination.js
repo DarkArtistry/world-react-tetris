@@ -25,7 +25,7 @@ class Pagination extends Component {
     // Add the first page if it's not in the visible range
     if (adjustedStartPage > 1) {
       pages.push(
-        <Button key={1} onClick={() => this.handlePageChange(1)}>
+        <Button key={1} onMouseDown={() => this.handlePageChange(1)}>
           1
         </Button>
       );
@@ -44,7 +44,7 @@ class Pagination extends Component {
         <Button
           key={i}
           isActive={currentPage === i}
-          onClick={() => this.handlePageChange(i)}
+          onMouseDown={() => this.handlePageChange(i)}
         >
           {i}
         </Button>
@@ -63,7 +63,7 @@ class Pagination extends Component {
       pages.push(
         <Button
           key={totalPages}
-          onClick={() => this.handlePageChange(totalPages)}
+          onMouseDown={() => this.handlePageChange(totalPages)}
         >
           {totalPages}
         </Button>
@@ -92,13 +92,13 @@ class Pagination extends Component {
 
     return (
       <div className={style.pagination}>
-        <Button disabled={currentPage === 1} onClick={this.handlePrevious}>
+        <Button disabled={currentPage === 1} onMouseDown={this.handlePrevious}>
           {"<"}
         </Button>
 
         {this.renderPageNumbers()}
 
-        <Button disabled={currentPage === totalPages} onClick={this.handleNext}>
+        <Button disabled={currentPage === totalPages} onMouseDown={this.handleNext}>
           {">"}
         </Button>
       </div>

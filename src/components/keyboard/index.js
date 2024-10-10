@@ -41,7 +41,7 @@ class Keyboard extends React.Component {
     // 阻止双指放大
     document.addEventListener("gesturestart", (e) => {
       if (e.preventDefault) {
-        event.preventDefault();
+        e.preventDefault();
       }
     });
 

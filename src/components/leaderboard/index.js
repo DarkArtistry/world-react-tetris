@@ -14,7 +14,10 @@ import {
 import * as style from "./index.less";
 import actions from "../../actions";
 import store from "../../store";
-import { MiniKit, tokenToDecimals, Tokens } from "@worldcoin/minikit-js";
+import { 
+  MiniKit, tokenToDecimals, Tokens, VerificationLevel,
+  ResponseEvent, ISuccessResult, MiniAppVerifyActionPayload
+ } from "@worldcoin/minikit-js";
 import Button from "../button";
 import Pagination from "./pagination";
 
@@ -29,10 +32,50 @@ class Leaderboard extends Component {
       pageSize: 10,
       leaderboard: [],
       loading: true,
+      nullifier_hash: "",
     };
   }
   componentWillMount() {
     this.fetchLeaderboard();
+  }
+
+  componentDidMount() {
+    let that = this;
+    if (!MiniKit.isInstalled()) {
+      return;
+    }
+
+    MiniKit.subscribe(ResponseEvent.MiniAppVerifyAction, async (response) => {
+      if (response.status === "error") {
+        return console.log("Error payload", response);
+      }
+
+      // Verify the proof in the backend
+      let { nullifier_hash } = response
+      that.setState({ nullifier_hash });
+      // TODO: Handle Success!
+      await that.sendPayment();
+    });
+
+    MiniKit.subscribe(
+      ResponseEvent.MiniAppPayment,
+      async (response) => {
+        if (response.status == "success") {
+            const { points } = that.props;
+            const name = prompt(`Enter your name to submit your score(${points}):`);
+
+            if (name) {
+              await addDoc(collection(db, "leaderboard"), {
+                name,
+                nullifier_hash: that.state.nullifier_hash,
+                points,
+              });
+              store.dispatch(actions.pointsSubmitted(true));
+              that.fetchLeaderboard();
+            }
+        }
+      }
+    );
   }
 
   handlePageChange = (currentPage) => {
@@ -101,7 +144,7 @@ class Leaderboard extends Component {
 
     const payload = {
       reference: uuid,
-      to: "xxxxxxxxxxxxx", // Test address
+      to: "0x52ffb2ea73f0178f9e073b510e18648d253f6515", // Test address
       tokens: [
         {
           symbol: Tokens.WLD,
@@ -119,17 +162,14 @@ class Leaderboard extends Component {
   // Submit score to Firebase
   submitScore = async () => {
     try {
-      await this.sendPayment();
-      const { points } = this.props;
-      const name = prompt(`Enter your name to submit your score(${points}):`);
+      if (MiniKit.isInstalled()) {
+        const verifyPayload = {
+          action: "verify-world-id", // This is your action ID from the Developer Portal
+          signal: "v1", // Optional additional data
+          verification_level: VerificationLevel.Orb, // Orb | Device
+        };
 
-      if (name) {
-        await addDoc(collection(db, "leaderboard"), {
-          name,
-          points,
-        });
-        store.dispatch(actions.pointsSubmitted(true));
-        this.fetchLeaderboard();
+        const verifyPayloadResponse = MiniKit.commands.verify(verifyPayload);
       }
     } catch (error) {}
   };
@@ -148,7 +188,7 @@ class Leaderboard extends Component {
             <h4 className={style.pointsText}>Your Points: {points}</h4>
             {!pointsSubmitted && (
               <div className={style.buttonContainer}>
-                <Button onClick={this.submitScore}>Submit Score</Button>
+                <Button onMouseDown={this.submitScore}>Submit Score (1 WLD)</Button>
               </div>
             )}
             <h4 className={style.leaderboardHeading}>Leaderboard</h4>
