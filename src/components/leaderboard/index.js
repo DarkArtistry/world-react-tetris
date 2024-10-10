@@ -34,48 +34,15 @@ class Leaderboard extends Component {
       loading: true,
       nullifier_hash: "",
     };
+
+    this.fetchLeaderboard = this.fetchLeaderboard.bind(this); // Add this line
+    this.sendPayment = this.sendPayment.bind(this); // Add this line
+    this.submitScore = this.submitScore.bind(this); // Add this line
   }
-  componentWillMount() {
+  
+  async componentWillMount() {
+    MiniKit.install();
     this.fetchLeaderboard();
-  }
-
-  componentDidMount() {
-    let that = this;
-    if (!MiniKit.isInstalled()) {
-      return;
-    }
-
-    MiniKit.subscribe(ResponseEvent.MiniAppVerifyAction, async (response) => {
-      if (response.status === "error") {
-        return console.log("Error payload", response);
-      }
-
-      // Verify the proof in the backend
-      let { nullifier_hash } = response
-      that.setState({ nullifier_hash });
-      // TODO: Handle Success!
-      await that.sendPayment();
-    });
-
-    MiniKit.subscribe(
-      ResponseEvent.MiniAppPayment,
-      async (response) => {
-        if (response.status == "success") {
-            const { points } = that.props;
-            const name = prompt(`Enter your name to submit your score(${points}):`);
-
-            if (name) {
-              await addDoc(collection(db, "leaderboard"), {
-                name,
-                nullifier_hash: that.state.nullifier_hash,
-                points,
-              });
-              store.dispatch(actions.pointsSubmitted(true));
-              that.fetchLeaderboard();
-            }
-        }
-      }
-    );
   }
 
   handlePageChange = (currentPage) => {
@@ -134,7 +101,8 @@ class Leaderboard extends Component {
   };
 
   async sendPayment() {
-    console.log("MiniKit.isInstalled() : ", MiniKit.isInstalled());
+    console.log("MiniKit.isInstalled() 1: ", MiniKit.isInstalled());
+    let that = this;
     // const res = await fetch('/api/initiate-payment', {
     // method: 'POST',
     // });
@@ -156,20 +124,43 @@ class Leaderboard extends Component {
 
     if (MiniKit.isInstalled()) {
       MiniKit.commands.pay(payload);
+      MiniKit.subscribe(
+        ResponseEvent.MiniAppPayment,
+        async (response) => {
+          if (response.status == "success") {
+              const { points } = that.props;
+              const name = prompt(`Enter your name to submit your score(${points}):`);
+  
+              if (name) {
+                await addDoc(collection(db, "leaderboard"), {
+                  name,
+                  nullifier_hash: that.state.nullifier_hash,
+                  points,
+                });
+                store.dispatch(actions.pointsSubmitted(true));
+                this.fetchLeaderboard();
+                MiniKit.unsubscribe(ResponseEvent.MiniAppPayment);
+              }
+          }
+        }
+      );
     }
   }
 
   // Submit score to Firebase
   submitScore = async () => {
     try {
+      console.log("MiniKit.isInstalled() 1: ", MiniKit.isInstalled());
+      
       if (MiniKit.isInstalled()) {
-        const verifyPayload = {
-          action: "verify-world-id", // This is your action ID from the Developer Portal
-          signal: "v1", // Optional additional data
-          verification_level: VerificationLevel.Orb, // Orb | Device
-        };
+        // const verifyPayload = {
+        //   action: "verify-world-id", // This is your action ID from the Developer Portal
+        //   signal: "v1", // Optional additional data
+        //   verification_level: VerificationLevel.Orb, // Orb | Device
+        // };
 
-        const verifyPayloadResponse = MiniKit.commands.verify(verifyPayload);
+        // const verifyPayloadResponse = MiniKit.commands.verify(verifyPayload);
+        await sendPayment();
       }
     } catch (error) {}
   };
@@ -188,7 +179,14 @@ class Leaderboard extends Component {
             <h4 className={style.pointsText}>Your Points: {points}</h4>
             {!pointsSubmitted && (
               <div className={style.buttonContainer}>
-                <Button onMouseDown={this.submitScore}>Submit Score (1 WLD)</Button>
+                <Button 
+                  // onMouseDown={this.submitScore}
+                  onTouchStart={
+                    (e) => {
+                      e.preventDefault();
+                      this.submitScore();
+                    }}
+                >Submit Score (1 WLD)</Button>
               </div>
             )}
             <h4 className={style.leaderboardHeading}>Leaderboard</h4>

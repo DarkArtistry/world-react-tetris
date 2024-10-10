@@ -88,12 +88,10 @@ class Draggable extends React.Component {
   };
 
   handleMouseClick = () => {
-    const { startX, startY, endX, endY, dragDirection } = this.state;
-
-    console.log(startX, startY, endX, endY, dragDirection);
+    const { endX, endY, dragDirection } = this.state;
 
     if (endX === 0 && endY === 0 && dragDirection === null) {
-      this.onDragUp();
+      this.onRotate();
     }
   };
 
@@ -122,9 +120,9 @@ class Draggable extends React.Component {
   };
 
   onDragUp = () => {
-    todo.rotate.down(store);
+    todo.up.down(store);
     setTimeout(() => {
-      todo.rotate.up(store);
+      todo.up.up(store);
       this.setState({
         endX: 0,
         endY: 0,
@@ -142,33 +140,27 @@ class Draggable extends React.Component {
     });
   };
 
-  componentDidMount() {
-    // Mouse events
-    document.addEventListener("mousemove", this.handleMove);
-    document.addEventListener("mouseup", this.handleEnd);
-
-    // Touch events
-    document.addEventListener("touchmove", this.handleMove);
-    document.addEventListener("touchend", this.handleEnd);
-  }
-
-  componentWillUnmount() {
-    // Mouse events
-    document.removeEventListener("mousemove", this.handleMove);
-    document.removeEventListener("mouseup", this.handleEnd);
-
-    // Touch events
-    document.removeEventListener("touchmove", this.handleMove);
-    document.removeEventListener("touchend", this.handleEnd);
-  }
+  onRotate = () => {
+    todo.rotate.down(store);
+    setTimeout(() => {
+      todo.rotate.up(store);
+      this.setState({
+        endX: 0,
+        endY: 0,
+        dragDirection: null,
+      });
+    }, 100);
+  };
 
   render() {
     return (
       <div
         className={style.draggable}
-        //onMouseDown={this.handleStart} // Start drag on mouse down
-        onTouchStart={this.handleStart} // Start drag on touch start
-        // onClick={this.handleMouseClick}
+        onTouchStart={this.handleStart}
+        onMouseMove={this.handleMove}
+        onMouseUp={this.handleEnd}
+        onTouchMove={this.handleMove}
+        onTouchEnd={this.handleEnd}
       />
     );
   }

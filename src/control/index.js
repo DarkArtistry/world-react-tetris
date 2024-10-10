@@ -2,11 +2,11 @@ import store from "../store";
 import todo from "./todo";
 
 const keyboard = {
+  32: "rotate",
   37: "left",
-  38: "rotate",
   39: "right",
   40: "down",
-  32: "space",
+  38: "up",
   83: "s",
   82: "r",
   80: "p",

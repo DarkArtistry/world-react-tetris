@@ -48,9 +48,7 @@ const down = (store) => {
         if (cur) {
           return;
         }
-        let startLines = state.get('startLines');
-        startLines = startLines + 1 > 10 ? 0 : startLines + 1;
-        store.dispatch(actions.startLines(startLines));
+        states.start();
       },
     });
   }
