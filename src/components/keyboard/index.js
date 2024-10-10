@@ -179,7 +179,7 @@ class Keyboard extends React.Component {
           positionRight={theme.arrowPosition === "right"}
           active={keyboard.get("drop")}
           ref={(c) => {
-            this.dom_space = c;
+            this.dom_up = c;
           }}
         />
         <Button
