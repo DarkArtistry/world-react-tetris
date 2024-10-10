@@ -10,8 +10,9 @@ class WhiteButton extends Component {
     };
   }
 
-  handleClick = () => {
-    this.props.onMouseDown();
+  handleClick = (e) => {
+    // this.props.onMouseDown();
+    this.props.onTouchStart(e);
   };
 
   render() {
@@ -26,6 +27,7 @@ class WhiteButton extends Component {
         })}
         disabled={disabled}
         onMouseDown={this.handleClick}
+        onTouchStart={this.handleClick}
       >
         {children}
       </button>
