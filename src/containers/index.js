@@ -170,14 +170,15 @@ class App extends React.Component {
           })}
         >
           <div className={style.buttonContainer}>
-            <WhiteButton 
+            <WhiteButton
               onMouseDown={this.handleButtonClick}
               onTouchStart={(e) => {
                 e.preventDefault();
                 this.handleButtonClick();
               }}
-  
-            >Support Development by Donating 1 WLD</WhiteButton>
+            >
+              Support Development by Donating 1 WLD
+            </WhiteButton>
           </div>
           <Decorate />
 
@@ -202,6 +203,7 @@ class App extends React.Component {
                             value={color.code}
                             checked={theme.backgroundColor === color.code}
                             onChange={this.handleBackgroundColorChange}
+                            onTouchStart={this.handleBackgroundColorChange}
                           />
                           <label htmlFor={`background-color-${index}`}>
                             {color.name}
@@ -220,6 +222,7 @@ class App extends React.Component {
                             value={color.code}
                             checked={theme.buttonColor === color.code}
                             onChange={this.handleButtonColorChange}
+                            onTouchStart={this.handleButtonColorChange}
                           />
                           <label htmlFor={`button-color-${index}`}>
                             {color.name}
@@ -239,6 +242,7 @@ class App extends React.Component {
                             value={pos}
                             checked={theme.arrowPosition === pos}
                             onChange={this.handleArrowPositionChange}
+                            onTouchStart={this.handleArrowPositionChange}
                           />
                           <label htmlFor={`arrow-pos-${pos}`}>{pos}</label>
                         </div>
