@@ -21,21 +21,14 @@ import Logo from "../components/logo";
 import Keyboard from "../components/keyboard";
 // import Guide from '../components/guide';
 
-import {
-  transform,
-  lastRecord,
-  speeds,
-  i18n,
-  lan,
-  themeColors,
-} from "../unit/const";
+import { transform, lastRecord, speeds, i18n, lan } from "../unit/const";
 import { visibilityChangeEvent, isFocus } from "../unit";
 import states from "../control/states";
 import Draggable from "../components/draggable";
 import Leaderboard from "../components/leaderboard";
 import lightenColor from "../utils/lightenColor";
-import Button from "../components/button";
 import WhiteButton from "../components/whitebutton";
+import Theme from "../components/theme";
 
 class App extends React.Component {
   constructor() {
@@ -125,17 +118,6 @@ class App extends React.Component {
       h: document.documentElement.clientHeight,
     });
   }
-  handleBackgroundColorChange = (event) => {
-    states.backgroundColor(event.target.value);
-  };
-
-  handleButtonColorChange = (event) => {
-    states.buttonColor(event.target.value);
-  };
-
-  handleArrowPositionChange = (event) => {
-    states.arrowPosition(event.target.value);
-  };
 
   render() {
     let filling = 0;
@@ -159,7 +141,7 @@ class App extends React.Component {
       css[transform] = `scale(${scale})`;
       return css;
     })();
-    const { theme, pause, cur } = this.props;
+    const { theme, music, pause, cur } = this.props;
 
     return (
       <div
@@ -193,67 +175,7 @@ class App extends React.Component {
             {!theme.isTheme && !pause && cur && <Draggable />}
             <div className={style.panel}>
               {theme.isTheme ? (
-                <div>
-                  <h3 className={style.textCenter}>{i18n.theme[lan]}</h3>
-                  <div className={style.themeForm}>
-                    <p>{i18n.backgroundColor[lan]}</p>
-                    <div className={style.radioGroup}>
-                      {themeColors.map((color, index) => (
-                        <div key={index}>
-                          <input
-                            type="radio"
-                            id={`background-color-${index}`}
-                            name="background-color"
-                            value={color.code}
-                            checked={theme.backgroundColor === color.code}
-                            onChange={this.handleBackgroundColorChange}
-                            onTouchStart={this.handleBackgroundColorChange}
-                          />
-                          <label htmlFor={`background-color-${index}`}>
-                            {color.name}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                    <p>{i18n.buttonColor[lan]}</p>
-                    <div className={style.radioGroup}>
-                      {themeColors.map((color, index) => (
-                        <div key={index}>
-                          <input
-                            type="radio"
-                            id={`button-color-${index}`}
-                            name="button-color"
-                            value={color.code}
-                            checked={theme.buttonColor === color.code}
-                            onChange={this.handleButtonColorChange}
-                            onTouchStart={this.handleButtonColorChange}
-                          />
-                          <label htmlFor={`button-color-${index}`}>
-                            {color.name}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-
-                    <p>{i18n.arrowPosition[lan]}</p>
-                    <div className={style.radioGroup}>
-                      {["left", "right"].map((pos, index) => (
-                        <div key={index}>
-                          <input
-                            type="radio"
-                            id={`arrow-pos-${pos}`}
-                            name="arrow-pos"
-                            value={pos}
-                            checked={theme.arrowPosition === pos}
-                            onChange={this.handleArrowPositionChange}
-                            onTouchStart={this.handleArrowPositionChange}
-                          />
-                          <label htmlFor={`arrow-pos-${pos}`}>{pos}</label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <Theme theme={theme} music={music} />
               ) : (
                 <div>
                   <Leaderboard />

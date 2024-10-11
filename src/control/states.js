@@ -243,6 +243,9 @@ const states = {
   arrowPosition: (position) => {
     store.dispatch(actions.arrowPosition(position));
   },
+  sound: (value) => {
+    store.dispatch(actions.music(value));
+  },
 };
 
 export default states;
