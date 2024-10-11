@@ -237,18 +237,6 @@ class Keyboard extends React.Component {
           backgroundColor={theme.buttonColor}
           color="lightgrey"
           size="s2"
-          top={positions.sound.top}
-          left={positions.sound.left}
-          label={`${i18n.sound[lan]}(S)`}
-          active={keyboard.get("music")}
-          ref={(c) => {
-            this.dom_s = c;
-          }}
-        />
-        <Button
-          backgroundColor={theme.buttonColor}
-          color="lightgrey"
-          size="s2"
           top={positions.pause.top}
           left={positions.pause.left}
           label={`${i18n.pause[lan]}(P)`}
