@@ -123,10 +123,9 @@ class Keyboard extends React.Component {
       left: { top: 90, left: 284 },
       right: { top: 90, left: 464 },
       drop: { top: 0, left: 374 },
-      reset: { top: 0, left: 196 },
-      sound: { top: 0, left: 106 },
+      reset: { top: 0, left: 106 },
       pause: { top: 0, left: 16 },
-      theme: { top: 0, left: 286 },
+      theme: { top: 0, left: 196 },
     };
 
     const rightPositions = {
@@ -136,8 +135,7 @@ class Keyboard extends React.Component {
       right: { top: 90, left: 200 },
       drop: { top: 0, left: 110 },
       reset: { top: 0, left: 410 },
-      sound: { top: 0, left: 320 },
-      pause: { top: 0, left: 230 },
+      pause: { top: 0, left: 320 },
       theme: { top: 0, left: 500 },
     };
 
@@ -233,6 +231,7 @@ class Keyboard extends React.Component {
             this.dom_r = c;
           }}
         />
+
         <Button
           backgroundColor={theme.buttonColor}
           color="lightgrey"
