@@ -91,6 +91,9 @@ class App extends React.Component {
   }
 
   async sendPayment() {
+    if (!MiniKit.isInstalled()) {
+      MiniKit.install();
+    }
     console.log("MiniKit.isInstalled() 2: ", MiniKit.isInstalled());
     // const res = await fetch('/api/initiate-payment', {
     // method: 'POST',
@@ -101,7 +104,7 @@ class App extends React.Component {
 
     const payload = {
       reference: uuid,
-      to: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // Test address
+      to: "0x52ffb2ea73f0178f9e073b510e18648d253f6515", // Test address
       tokens: [
         {
           symbol: Tokens.WLD,
@@ -171,6 +174,7 @@ class App extends React.Component {
         >
           <div className={style.buttonContainer}>
             <WhiteButton
+              onMouseDown={this.handleButtonClick}
               onTouchStart={(e) => {
                 console.log("event : ", e);
                 e.preventDefault();

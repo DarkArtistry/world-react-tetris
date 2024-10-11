@@ -14,12 +14,13 @@ import {
 import * as style from "./index.less";
 import actions from "../../actions";
 import store from "../../store";
-import { 
+import {
   MiniKit, tokenToDecimals, Tokens, VerificationLevel,
   ResponseEvent, ISuccessResult, MiniAppVerifyActionPayload
  } from "@worldcoin/minikit-js";
 import Button from "../button";
 import Pagination from "./pagination";
+import Swal from 'sweetalert2';
 
 class Leaderboard extends Component {
   constructor(props) {
@@ -101,6 +102,9 @@ class Leaderboard extends Component {
   };
 
   async sendPayment() {
+    if (!MiniKit.isInstalled()) {
+      MiniKit.install();
+    }
     console.log("MiniKit.isInstalled() 1: ", MiniKit.isInstalled());
     let that = this;
     // const res = await fetch('/api/initiate-payment', {
@@ -127,6 +131,11 @@ class Leaderboard extends Component {
       MiniKit.subscribe(
         ResponseEvent.MiniAppPayment,
         async (response) => {
+          Swal.fire({
+            title: "Payment Completed!",
+            text: JSON.stringify(response),
+            icon: "success"
+          });
           if (response.status == "success") {
               const { points } = that.props;
               const name = prompt(`Enter your name to submit your score(${points}):`);
@@ -138,8 +147,13 @@ class Leaderboard extends Component {
                   points,
                 });
                 store.dispatch(actions.pointsSubmitted(true));
-                this.fetchLeaderboard();
+                await this.fetchLeaderboard();
                 MiniKit.unsubscribe(ResponseEvent.MiniAppPayment);
+                Swal.fire({
+                  title: "Score Submitted!",
+                  text: "Let's Go Again!",
+                  icon: "success"
+                });
               }
           }
         }
@@ -151,7 +165,9 @@ class Leaderboard extends Component {
   submitScore = async () => {
     try {
       console.log("MiniKit.isInstalled() 1: ", MiniKit.isInstalled());
-      
+      if (!MiniKit.isInstalled()) {
+        MiniKit.install();
+      }
       if (MiniKit.isInstalled()) {
         // const verifyPayload = {
         //   action: "verify-world-id", // This is your action ID from the Developer Portal

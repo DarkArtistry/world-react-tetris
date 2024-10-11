@@ -65,7 +65,8 @@
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "redux-immutable": "^3.0.8"
+    "redux-immutable": "^3.0.8",
+    "sweetalert2": "^11.14.2"
   },
   "engines": {
     "node": "^18.18.0",
