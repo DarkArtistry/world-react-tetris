@@ -84,6 +84,7 @@ class App extends React.Component {
   }
 
   async sendPayment() {
+    console.log("MiniKit", MiniKit);
     if (!MiniKit.isInstalled()) {
       MiniKit.install();
     }
@@ -104,7 +105,7 @@ class App extends React.Component {
           token_amount: tokenToDecimals(1, Tokens.WLD).toString(),
         },
       ],
-      description: "Test example payment for minikit",
+      description: "Support Development by Donating 1 WLD",
     };
 
     if (MiniKit.isInstalled()) {

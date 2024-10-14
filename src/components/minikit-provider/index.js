@@ -4,6 +4,7 @@ import { MiniKit } from "@worldcoin/minikit-js";
 export default class MiniKitProvider extends React.Component {
   componentDidMount() {
     MiniKit.install();
+    console.log("provider: ", MiniKit.isInstalled());
   }
 
   render() {
